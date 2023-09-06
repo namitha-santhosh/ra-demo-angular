@@ -49,6 +49,19 @@
       "price": 35.95,
       "starRating": 4.6,
       "imageUrl": "assets/images/xbox-controller.png"
+    },
+    {
+      "id": 11,
+      "productName": "Spoon",
+      "productCode": "GDN-0014",
+      "tags": [
+        "Utensil"
+      ],
+      "releaseDate": "",
+      "price": 0,
+      "description": "",
+      "starRating": "4",
+      "imageUrl": "/assets/images/spoon.jpg"
     }
   ],
   "signupUsersList": [

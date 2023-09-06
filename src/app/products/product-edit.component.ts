@@ -66,6 +66,7 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
                          Validators.maxLength(50)]],
       productCode: ['', Validators.required],
       starRating: ['', NumberValidators.range(1, 5)],
+      imageUrl: [''],
       tags: this.fb.array([]),
       description: ''
     });
@@ -133,6 +134,7 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
       productName: this.product.productName,
       productCode: this.product.productCode,
       starRating: this.product.starRating,
+      imageUrl: this.product.imageUrl,
       description: this.product.description
     });
     this.productForm.setControl('tags', this.fb.array(this.product.tags || []));
