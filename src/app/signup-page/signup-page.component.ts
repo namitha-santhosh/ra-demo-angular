@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, EmailValidator } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
@@ -15,23 +15,16 @@ export class SignupPageComponent {
 
   ngOnInit(): void {
     this.signUpForm = this.formBuilder.group({
-      email: [""],
-      password: [""]
+      fname: ["", Validators.required],
+      phone: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(5)]]
     })
   }
 
- /*  signUp(){
-    this.http.post<any>("http://localhost:3000/signupUsersList",this.signUpForm.value)
-    .subscribe(res=>{
-      alert('SIGNIN SUCCESFUL');
-      this.signUpForm.reset()
-      this.router.navigate(["login"])
-    },err=>{
-      alert("Something went wrong")
-    })
-  } */
 
   signUp() {
+    if (this.signUpForm.valid){
     console.log(this.signUpForm.value);
     this.http.post<any>("http://localhost:3000/signupUsersList", this.signUpForm.value)
       .subscribe({
@@ -44,6 +37,10 @@ export class SignupPageComponent {
           alert("Something went wrong");
         }
       });
+    }
+    else {
+      alert("Please enter all the required values.")
+    }
   }
   
 

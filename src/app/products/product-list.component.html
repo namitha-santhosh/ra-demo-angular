@@ -72,6 +72,13 @@
   </div>
 </div>
 
+<div>
+  <button class="btn btn-outline-primary btn-sm"
+                      [routerLink]="['/products/0/edit']">
+                Add  New Product
+              </button>
+</div>
+
 <div *ngIf="errorMessage"
      class="alert alert-danger">
   Error: {{ errorMessage }}

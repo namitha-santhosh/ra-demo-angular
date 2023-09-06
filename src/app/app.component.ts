@@ -4,17 +4,17 @@ import { Component } from '@angular/core';
   selector: 'pm-root',
   template: `
     <nav class='navbar navbar-expand navbar-light bg-light'>
-      <a class='navbar-brand'>{{pageTitle}}</a>
+      <a style="font-weight:bold;" class='navbar-brand'>{{pageTitle}}</a>
       <ul class='navbar-nav'>
         <li class='nav-item'><a class='nav-link' routerLinkActive='active'
               [routerLink]="['/welcome']">Home</a>
         </li>
-        <li class='nav-item'><a class='nav-link' routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}"
+        <!-- <li class='nav-item'><a class='nav-link' routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}"
               [routerLink]="['/products']">Product List</a>
         </li>
         <li class='nav-item'><a class='nav-link' routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}"
               [routerLink]="['/products/0/edit']">Add Product</a>
-        </li>
+        </li> -->
         <li class='nav-item'><a class='nav-link' routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}"
               [routerLink]="['/login']">Login</a>
         </li>
@@ -30,5 +30,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  pageTitle = 'Acme Product Management';
+  pageTitle = 'Tech & Mech';
 }

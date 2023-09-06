@@ -47,9 +47,10 @@ export class LoginPageComponent implements OnInit{
             return a.email === this.loginForm.value.email && a.password === this.loginForm.value.password;
           });
           if (user) {
-            alert('Login Successful');
+            const fname = user.fname;
+            alert(`Welcome, ${fname}`);
             this.loginForm.reset();
-            this.router.navigate(["home"]);
+            this.router.navigate(["products"]);
           } else {
             alert("User not found");
           }
