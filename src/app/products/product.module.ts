@@ -12,6 +12,7 @@ import { ProductListComponent } from './product-list.component';
 import { ProductDetailComponent } from './product-detail.component';
 import { ProductEditComponent } from './product-edit.component';
 import { ProductEditGuard } from './product-edit.guard';
+import { AuthGuard } from '../route.guard';
 
 @NgModule({
   imports: [
@@ -19,8 +20,8 @@ import { ProductEditGuard } from './product-edit.guard';
     ReactiveFormsModule,
     //InMemoryWebApiModule.forRoot(ProductData),
     RouterModule.forChild([
-      { path: 'products', component: ProductListComponent },
-      { path: 'products/:id', component: ProductDetailComponent },
+      { path: 'products', canActivate:[AuthGuard], component: ProductListComponent },
+      { path: 'products/:id', canActivate:[AuthGuard], component: ProductDetailComponent },
       {
         path: 'products/:id/edit',
         canDeactivate: [ProductEditGuard],

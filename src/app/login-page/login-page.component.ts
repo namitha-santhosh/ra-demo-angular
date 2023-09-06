@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -11,7 +12,10 @@ import { Router } from '@angular/router';
 export class LoginPageComponent implements OnInit{
   public loginForm!: FormGroup
 
-  constructor(private formbuilder: FormBuilder,private http: HttpClient, private router: Router) { }
+  constructor(private formbuilder: FormBuilder,
+              private http: HttpClient, 
+              private router: Router, 
+              private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loginForm = this.formbuilder.group({
@@ -49,6 +53,7 @@ export class LoginPageComponent implements OnInit{
           if (user) {
             const fname = user.fname;
             alert(`Welcome, ${fname}`);
+            this.authService.login()
             this.loginForm.reset();
             this.router.navigate(["products"]);
           } else {
@@ -59,6 +64,13 @@ export class LoginPageComponent implements OnInit{
           alert("Something went wrong");
         }
       });
+  }
+
+  logout() {
+    // Call the logout method from AuthService
+    this.authService.logout();
+    // Redirect to the login page after logout
+    this.router.navigate(['/login']);
   }
   
 }

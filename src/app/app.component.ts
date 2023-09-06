@@ -32,3 +32,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   pageTitle = 'Tech & Mech';
 }
+ 
+
+
