@@ -1,50 +1,50 @@
 
-<!-- <div>
-    <h1>Hello Welcome </h1>
-      <h3>Create An Account</h3>
-       <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
-         <div>
-           <label for="email">Email</label>
-           <input  formControlName="email" required  type="email">
-           <label for="password">Password</label>
-           <input formControlName="password" type="password">
-         </div>
-         <button>Submit</button>
-         <span>Already have an account? 
-         <a routerLink="/login">signUp</a></span>
-       </form>
-   </div> -->
+<div class="container">
+  <form [formGroup]="signUpForm" (ngSubmit)="signUp()" class="form-box1">
+    <h3>SignUp</h3>
 
-   <div class="container">
-    <form [formGroup]="signUpForm" (ngSubmit)="signUp()" class="form-box1">
-        <h3>SignUp </h3>
-
-        <div class="form-group">
-          <label for="email">Full Name</label>
-          <input type="email" formControlName="fname" class="form-control mb-3 mt-3" placeholder="Enter Full Name"/>
-        </div>
-
-      <div class="form-group">
-        <label for="email">Phone Number</label>
-        <input type="email" formControlName="phone" class="form-control mb-3 mt-3" placeholder="Enter Phone Number"/>
+    <div class="form-group">
+      <label for="fname">Full Name</label>
+      <input type="text" formControlName="fname" class="form-control mb-3 mt-3" placeholder="Enter Full Name" />
+      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('fname')?.hasError('required') && signUpForm.get('fname')?.touched" class="error-message">
+        Full Name is required.
       </div>
+    </div>
 
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" formControlName="email" class="form-control mb-3 mt-3" placeholder="Enter Email"/>
-        </div>
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="text" formControlName="phone" class="form-control mb-3 mt-3" placeholder="Enter Phone Number" />
+      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('phone')?.hasError('required') && signUpForm.get('phone')?.touched" class="error-message">
+        Phone Number is required.
+      </div>
+    </div>
 
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" formControlName="email" class="form-control mb-3 mt-3" placeholder="Enter Email" />
+      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('email')?.hasError('required') && signUpForm.get('email')?.touched" class="error-message">
+        Email is required.
+      </div>
+      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('email')?.hasError('email') && signUpForm.get('email')?.touched" class="error-message">
+        Invalid email format.
+      </div>
+    </div>
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" formControlName="password" class="form-control mb-3 mt-3" placeholder="Enter Password"/>
-        </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" formControlName="password" class="form-control mb-3 mt-3" placeholder="Enter Password" />
+      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('password')?.hasError('required') && signUpForm.get('password')?.touched" class="error-message">
+        Password is required.
+      </div>
+      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('password')?.hasError('minlength') && signUpForm.get('password')?.touched" class="error-message">
+        Password must be at least 5 characters long.
+      </div>
+    </div>
 
-        <span>Already have an account? </span>
-        <a routerLink="/login">Sign In</a>
-        <br/>
-        <button type="submit" class="btn btn-success">Signup</button>
-    </form>
+    <span>Already have an account? </span>
+    <a routerLink="/login">Sign In</a>
+    <br />
+    <button type="submit" class="btn btn-success">Signup</button>
+  </form>
 </div>
 <router-outlet></router-outlet>
-

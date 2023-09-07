@@ -92,6 +92,13 @@
       "email": "nandakishore@gmail.com",
       "password": "12345",
       "id": 4
+    },
+    {
+      "fname": "Santhosh",
+      "phone": "9447778558",
+      "email": "santhoshraj@gmail.com",
+      "password": "namitha",
+      "id": 5
     }
   ]
 }
