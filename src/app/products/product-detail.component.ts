@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Product } from './product';
 import { ProductService } from './product.service';
-import { AuthService } from '../auth.service';
 
 @Component({
   templateUrl: './product-detail.component.html',
@@ -19,14 +18,13 @@ export class ProductDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private productService: ProductService,
-              private authService: AuthService) {
+              ) {
   }
 
 
 
   ngOnInit(): void {
     const param = this.route.snapshot.paramMap.get('id');
-    this.isAuthenticated = this.authService.isAuthenticatedUser();
     if (param) {
       const id = +param;
       this.getProduct(id);
@@ -44,9 +42,5 @@ export class ProductDetailComponent implements OnInit {
     this.router.navigate(['/products']);
   }
 
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login'])
-  }
 
 }

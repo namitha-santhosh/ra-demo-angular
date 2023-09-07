@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service'; // Import AuthService
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -7,12 +8,12 @@ import { AuthService } from './auth.service'; // Import AuthService
     <nav class='navbar navbar-expand navbar-light bg-light'>
       <a style="font-weight:bold;" class='navbar-brand'>{{pageTitle}}</a>
       <ul class='navbar-nav'>
-        <li class='nav-item'><a class='nav-link' routerLinkActive='active' [routerLink]="['/welcome']">Home</a></li>
-        <li class='nav-item' *ngIf="!isAuthenticated"><a class='nav-link' routerLinkActive='active' [routerLink]="['/login']">Login</a></li>
-        <li class='nav-item' *ngIf="!isAuthenticated"><a class='nav-link' routerLinkActive='active' [routerLink]="['/signUp']">Register</a></li>
-        <li class='nav-item' *ngIf="isAuthenticated"><a class='nav-link' routerLinkActive='active' [routerLink]="['/products']">Products</a></li>
-        <li class='nav-item' *ngIf="isAuthenticated"><a class='nav-link' routerLinkActive='active' [routerLink]="['/products/0/edit']">Add Product</a></li>
-        <li class='nav-item' *ngIf="isAuthenticated"><a class='nav-link' (click)="logout()">Logout</a></li>
+      <li class='nav-item'><a class='nav-link' routerLinkActive='active' [routerLink]="['/welcome']">Home</a></li>
+    <li class='nav-item' *ngIf="!authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/login']">Login</a></li>
+    <li class='nav-item' *ngIf="!authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/signUp']">Register</a></li>
+    <li class='nav-item' *ngIf="authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/products']">Products</a></li>
+    <li class='nav-item' *ngIf="authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/products/0/edit']">Add Product</a></li>
+    <li class='nav-item' *ngIf="authService.isAuthenticatedUser()"><a class='nav-link' (click)="logout()" [ngClass]="{'hand-cursor': true}">Logout</a></li>
       </ul>
     </nav>
   `,
@@ -25,14 +26,17 @@ export class AppNavbarComponent {
 
   
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService,private router:Router) {}
 
 
 
    ngOnInit() {
     console.log('AppNavbarComponent initialized');
     // Check if the user is authenticated when the component loads
-    this.isAuthenticated = this.authService.authState.isAuthenticated;
+    this.authService.isAuthenticated$.subscribe((isAuthenticated) => {
+      this.isAuthenticated = isAuthenticated;
+    });
+    //this.isAuthenticated = this.authService.authState.isAuthenticated;
     console.log(this.isAuthenticated);
   } 
 
@@ -43,5 +47,6 @@ export class AppNavbarComponent {
     this.authService.logout();
     // Update the isAuthenticated status to false
     this.isAuthenticated = false;
-  }
+    this.router.navigate( ['/login'])
+  } 
 }
