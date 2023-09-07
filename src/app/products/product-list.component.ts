@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Product } from './product';
 import { ProductService } from './product.service';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './product-list.component.html',
@@ -26,7 +28,18 @@ export class ProductListComponent implements OnInit {
   filteredProducts: Product[] = [];
   products: Product[] = [];
 
-  constructor(private productService: ProductService) { }
+  isAuthenticated = false; // Initialize as false, update based on actual authentication state
+
+  constructor(private productService: ProductService, private authService: AuthService, private router: Router) { }
+
+
+  // Add a logout method that calls the AuthService's logout method
+  logout() {
+    this.authService.logout();
+    this.router.navigate(["login"]);
+    
+    // Optionally, you can redirect the user to another page after logout
+  }
 
   performFilter(filterBy: string): Product[] {
     filterBy = filterBy.toLocaleLowerCase();
@@ -47,6 +60,7 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isAuthenticated = this.authService.isAuthenticatedUser();
     this.productService.getProducts().subscribe({
       next: products => {
         this.products = products;
@@ -55,4 +69,8 @@ export class ProductListComponent implements OnInit {
       error: err => this.errorMessage = err
     });
   }
+
+  
+
+  
 }

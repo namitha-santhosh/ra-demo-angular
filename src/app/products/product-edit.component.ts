@@ -7,6 +7,7 @@ import { debounceTime } from 'rxjs/operators';
 
 import { Product } from './product';
 import { ProductService } from './product.service';
+import { AuthService } from '../auth.service';
 
 import { NumberValidators } from '../shared/number.validator';
 import { GenericValidator } from '../shared/generic-validator';
@@ -28,6 +29,7 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   displayMessage: { [key: string]: string } = {};
   private validationMessages: { [key: string]: { [key: string]: string } };
   private genericValidator: GenericValidator;
+  isAuthenticated = false;
 
   get tags(): FormArray {
     return this.productForm.get('tags') as FormArray;
@@ -36,7 +38,8 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private productService: ProductService) {
+              private productService: ProductService,
+              private authService: AuthService) {
 
     // Defines all of the validation messages for the form.
     // These could instead be retrieved from a file or database.
@@ -60,6 +63,7 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isAuthenticated = this.authService.isAuthenticatedUser();
     this.productForm = this.fb.group({
       productName: ['', [Validators.required,
                          Validators.minLength(3),
@@ -188,5 +192,10 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
     // Reset the form to clear the flags
     this.productForm.reset();
     this.router.navigate(['/products']);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

@@ -1,20 +1,19 @@
 import { Component } from '@angular/core';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'pm-root',
-  template: `
-    <nav class='navbar navbar-expand navbar-light bg-light'>
+  template: ` <app-navbar></app-navbar>
+  <div class='container'>
+    <router-outlet></router-outlet>
+  </div>
+  
+    <!-- <nav class='navbar navbar-expand navbar-light bg-light'>
       <a style="font-weight:bold;" class='navbar-brand'>{{pageTitle}}</a>
       <ul class='navbar-nav'>
         <li class='nav-item'><a class='nav-link' routerLinkActive='active'
               [routerLink]="['/welcome']">Home</a>
         </li>
-        <!-- <li class='nav-item'><a class='nav-link' routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}"
-              [routerLink]="['/products']">Product List</a>
-        </li>
-        <li class='nav-item'><a class='nav-link' routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}"
-              [routerLink]="['/products/0/edit']">Add Product</a>
-        </li> -->
         <li class='nav-item'><a class='nav-link' routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}"
               [routerLink]="['/login']">Login</a>
         </li>
@@ -25,7 +24,7 @@ import { Component } from '@angular/core';
     </nav>
     <div class='container'>
       <router-outlet></router-outlet>
-    </div>
+    </div> -->
     `,
   styleUrls: ['./app.component.css']
 })
@@ -35,3 +34,4 @@ export class AppComponent {
  
 
 
+ 

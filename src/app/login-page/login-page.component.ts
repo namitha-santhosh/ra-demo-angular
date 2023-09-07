@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-login-page',
@@ -10,7 +12,9 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit{
-  public loginForm!: FormGroup
+  public loginForm!: FormGroup;
+  private subscription: Subscription = new Subscription();
+
 
   constructor(private formbuilder: FormBuilder,
               private http: HttpClient, 
@@ -24,26 +28,10 @@ export class LoginPageComponent implements OnInit{
     })
   }
   
- /*  login(){
-    this.http.get<any>("http://localhost:3000/signupUsersList")
-    .subscribe(res=>{
-      const user = res.find((a:any)=>{
-        return a.email === this.loginForm.value.email && a.password === this.loginForm.value.password 
-      });
-      if(user){
-        alert('Login Succesful');
-        this.loginForm.reset()
-      this.router.navigate(["home"])
-      }else{
-        alert("user not found")
-      }
-    },err=>{
-      alert("Something went wrong")
-    })
-  }
- */
+ 
   login() {
     console.log(this.loginForm.value)
+    this.subscription.add(
     this.http.get<any>("http://localhost:3000/signupUsersList")
       .subscribe({
         next: (res) => {
@@ -53,7 +41,7 @@ export class LoginPageComponent implements OnInit{
           if (user) {
             const fname = user.fname;
             alert(`Welcome, ${fname}`);
-            this.authService.login()
+            this.authService.login();
             this.loginForm.reset();
             this.router.navigate(["products"]);
           } else {
@@ -63,8 +51,14 @@ export class LoginPageComponent implements OnInit{
         error: (err) => {
           alert("Something went wrong");
         }
-      });
+      })
+    );
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+  
 
   logout() {
     // Call the logout method from AuthService

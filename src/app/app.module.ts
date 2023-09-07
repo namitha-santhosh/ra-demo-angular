@@ -5,17 +5,20 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { AppNavbarComponent } from './app-navbar.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductModule } from './products/product.module';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
     LoginPageComponent,
-    SignupPageComponent
+    SignupPageComponent, 
+    AppNavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,7 @@ import { SignupPageComponent } from './signup-page/signup-page.component';
     ]),
     ProductModule
   ],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -24,6 +24,7 @@ import { AuthGuard } from '../route.guard';
       { path: 'products/:id', canActivate:[AuthGuard], component: ProductDetailComponent },
       {
         path: 'products/:id/edit',
+        canActivate: [AuthGuard],
         canDeactivate: [ProductEditGuard],
         component: ProductEditComponent
       }

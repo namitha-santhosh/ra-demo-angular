@@ -1,6 +1,7 @@
 <div class="card">
   <div class="card-header">
     {{pageTitle}}
+    <button class="btn btn-danger btn-sm float-left" *ngIf="isAuthenticated" (click)="logout()">Logout</button>
   </div>
 
   <div class="card-body">
