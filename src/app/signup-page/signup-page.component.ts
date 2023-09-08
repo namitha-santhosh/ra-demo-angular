@@ -20,7 +20,7 @@ export class SignupPageComponent {
   ngOnInit(): void {
     this.signUpForm = this.formBuilder.group({
       fname: ["", Validators.required],
-      phone: ["", Validators.required],
+      phone: ["", Validators.minLength(10)],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(5)]]
     });
@@ -29,18 +29,35 @@ export class SignupPageComponent {
   signUp() {
     if (this.signUpForm.valid) {
       console.log(this.signUpForm.value);
-      this.http.post<any>("http://localhost:3000/signupUsersList", this.signUpForm.value).subscribe({
-        next: (res) => {
-          alert('Sign Up Successful');
-          this.signUpForm.reset();
-          this.router.navigate(["login"]);
+  
+      // Check if the email already exists before submitting the form
+      this.http.get<any>("http://localhost:3000/signupUsersList").subscribe({
+        next: (users) => {
+          // Check if the email already exists in the list of users
+          const emailExists = users.some((user: { email: any; }) => user.email === this.signUpForm.value.email);
+          if (emailExists) {
+            alert("An account with this email id already exits. Please use a different email.");
+          } else {
+            // Email doesn't exist, proceed with sign up
+            this.http.post<any>("http://localhost:3000/signupUsersList", this.signUpForm.value).subscribe({
+              next: (res) => {
+                alert('Sign Up Successful');
+                this.signUpForm.reset();
+                this.router.navigate(["login"]);
+              },
+              error: (err) => {
+                alert("Something went wrong");
+              }
+            });
+          }
         },
         error: (err) => {
-          alert("Something went wrong");
+          alert("Something went wrong while checking email availability.");
         }
       });
     } else {
       alert("Please enter all the required values.");
     }
   }
+  
 }

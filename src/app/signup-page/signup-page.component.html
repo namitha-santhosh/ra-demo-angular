@@ -14,9 +14,9 @@
     <div class="form-group">
       <label for="phone">Phone Number</label>
       <input type="text" formControlName="phone" class="form-control mb-3 mt-3" placeholder="Enter Phone Number" />
-      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('phone')?.hasError('required') && signUpForm.get('phone')?.touched" class="error-message">
-        Phone Number is required.
-      </div>
+      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('phone')?.hasError('minlength') && signUpForm.get('phone')?.touched" class="error-message">
+        Please enter a valid phone number.
+      </div> 
     </div>
 
     <div class="form-group">

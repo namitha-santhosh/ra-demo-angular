@@ -99,6 +99,13 @@
       "email": "santhoshraj@gmail.com",
       "password": "namitha",
       "id": 5
+    },
+    {
+      "fname": "Riya",
+      "phone": "834562190",
+      "email": "riya@gmail.com",
+      "password": "world",
+      "id": 6
     }
   ]
 }
