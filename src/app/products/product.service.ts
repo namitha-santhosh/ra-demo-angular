@@ -67,8 +67,6 @@ export class ProductService {
       );
   }
 
-  // ... Other methods (getProduct, createProduct, deleteProduct, updateProduct) remain the same
-
   private handleError(err: HttpErrorResponse): Observable<never> {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {

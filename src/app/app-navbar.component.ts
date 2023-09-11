@@ -33,10 +33,7 @@ export class AppNavbarComponent {
    ngOnInit() {
     console.log('AppNavbarComponent initialized');
     // Check if the user is authenticated when the component loads
-    this.authService.isAuthenticated$.subscribe((isAuthenticated) => {
-      this.isAuthenticated = isAuthenticated;
-    });
-    //this.isAuthenticated = this.authService.authState.isAuthenticated;
+    this.isAuthenticated = this.authService.authState.isAuthenticated;
     console.log(this.isAuthenticated);
   } 
 

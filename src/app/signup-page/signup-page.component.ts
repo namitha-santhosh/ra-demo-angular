@@ -36,7 +36,7 @@ export class SignupPageComponent {
           // Check if the email already exists in the list of users
           const emailExists = users.some((user: { email: any; }) => user.email === this.signUpForm.value.email);
           if (emailExists) {
-            alert("An account with this email id already exits. Please use a different email.");
+            alert("An account with this email id already exits. Please login.");
           } else {
             // Email doesn't exist, proceed with sign up
             this.http.post<any>("http://localhost:3000/signupUsersList", this.signUpForm.value).subscribe({
