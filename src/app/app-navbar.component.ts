@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
     <nav class='navbar navbar-expand navbar-light bg-light'>
       <a style="font-weight:bold;" class='navbar-brand'>{{pageTitle}}</a>
       <ul class='navbar-nav'>
-      <li class='nav-item'><a class='nav-link' routerLinkActive='active' [routerLink]="['/welcome']">Home</a></li>
-    <li class='nav-item' *ngIf="!authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/login']">Login</a></li>
-    <li class='nav-item' *ngIf="!authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/signUp']">Register</a></li>
-    <li class='nav-item' *ngIf="authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/products']">Products</a></li>
-    <li class='nav-item' *ngIf="authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/products/0/edit']">Add Product</a></li>
-    <li class='nav-item' *ngIf="authService.isAuthenticatedUser()"><a class='nav-link' (click)="logout()" [ngClass]="{'hand-cursor': true}">Logout</a></li>
+        <li class='nav-item'><a class='nav-link' routerLinkActive='active' [routerLink]="['/welcome']">Home</a></li>
+        <li class='nav-item' *ngIf="!authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/login']">Login</a></li>
+        <li class='nav-item' *ngIf="!authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/signUp']">Register</a></li>
+        <li class='nav-item' *ngIf="authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/products']">Products</a></li>
+        <li class='nav-item' *ngIf="authService.isAuthenticatedUser()"><a class='nav-link' routerLinkActive='active' [routerLink]="['/products/0/edit']">Add Product</a></li>
+        <li class='nav-item' *ngIf="authService.isAuthenticatedUser()"><a style="color:red" class='nav-link' (click)="logout()" [ngClass]="{'hand-cursor': true}">Logout</a></li>
       </ul>
     </nav>
   `,
