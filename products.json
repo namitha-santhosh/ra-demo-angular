@@ -62,6 +62,19 @@
       "description": "",
       "starRating": "4",
       "imageUrl": "/assets/images/spoon.jpg"
+    },
+    {
+      "id": 12,
+      "productName": "Screwdriver",
+      "productCode": "GD-102",
+      "tags": [
+        "Tool"
+      ],
+      "releaseDate": "",
+      "price": 0,
+      "description": "",
+      "starRating": "4",
+      "imageUrl": "assets/images/screwdriver.png"
     }
   ],
   "signupUsersList": [
@@ -106,6 +119,13 @@
       "email": "riya@gmail.com",
       "password": "world",
       "id": 6
+    },
+    {
+      "fname": "Namitha",
+      "phone": "",
+      "email": "namitha@gmail.com",
+      "password": "hello",
+      "id": 7
     }
   ]
 }

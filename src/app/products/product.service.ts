@@ -11,7 +11,7 @@ import { Product } from './product';
   providedIn: 'root'
 })
 export class ProductService {
-  private productsUrl = 'http://localhost:3000/products'; // JSON Server endpoint
+  private productsUrl = 'http://127.0.0.1:8000/api/products'; // JSON Server endpoint
 
   constructor(private http: HttpClient) { }
 

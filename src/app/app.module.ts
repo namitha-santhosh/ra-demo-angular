@@ -11,6 +11,7 @@ import { ProductModule } from './products/product.module';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
 import { AuthService } from './auth.service';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { AuthService } from './auth.service';
     WelcomeComponent,
     LoginPageComponent,
     SignupPageComponent, 
-    AppNavbarComponent,
+    AppNavbarComponent, TestComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +29,7 @@ import { AuthService } from './auth.service';
       { path: 'welcome', component: WelcomeComponent },
       { path: 'login', component:LoginPageComponent},
       { path: 'signUp', component:SignupPageComponent},
+      {path: 'test', component:TestComponent},
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'} 
     ]),

@@ -4,17 +4,17 @@
     <h3>SignUp</h3>
 
     <div class="form-group">
-      <label for="fname">Full Name</label>
-      <input type="text" formControlName="fname" class="form-control mb-3 mt-3" placeholder="Enter Full Name" />
-      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('fname')?.hasError('required') && signUpForm.get('fname')?.touched" class="error-message">
+      <label for="fullname">Full Name</label>
+      <input type="text" formControlName="fullname" class="form-control mb-3 mt-3" placeholder="Enter Full Name" />
+      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('fullname')?.hasError('required') && signUpForm.get('fullname')?.touched" class="error-message">
         Full Name is required.
       </div>
     </div>
 
     <div class="form-group">
-      <label for="phone">Phone Number</label>
-      <input type="text" formControlName="phone" class="form-control mb-3 mt-3" placeholder="Enter Phone Number" />
-      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('phone')?.hasError('minlength') && signUpForm.get('phone')?.touched" class="error-message">
+      <label for="contact">Phone Number</label>
+      <input type="text" formControlName="contact" class="form-control mb-3 mt-3" placeholder="Enter Phone Number" />
+      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('contact')?.hasError('minlength') && signUpForm.get('contact')?.touched" class="error-message">
         Please enter a valid phone number.
       </div> 
     </div>
