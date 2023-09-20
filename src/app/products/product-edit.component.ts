@@ -24,6 +24,8 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   product!: Product;
   private sub!: Subscription;
 
+  selectedImageFile: File | null = null;
+
   // Use with the generic validation message class
   displayMessage: { [key: string]: string } = {};
   private validationMessages: { [key: string]: { [key: string]: string } };
@@ -67,7 +69,10 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
                          Validators.maxLength(50)]],
       productCode: ['', Validators.required],
       starRating: ['', NumberValidators.range(1, 5)],
-      imageUrl: [''],
+      releaseDate: [''],
+      price: [''],
+      imageFile: [],
+      //imageUrl: [''],
       tags: this.fb.array([]),
       description: ''
     });
@@ -135,6 +140,8 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
       productName: this.product.productName,
       productCode: this.product.productCode,
       starRating: this.product.starRating,
+      releaseDate: this.product.releaseDate,
+      price: this.product.price,
       imageUrl: this.product.imageUrl,
       description: this.product.description
     });
@@ -155,27 +162,57 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
   }
+  
+  onImageChange(event: any): void {
+  const file = event.target.files[0];
+  this.selectedImageFile = file;
+  }
 
   saveProduct(): void {
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
-        const p = { ...this.product, ...this.productForm.value };
-
-        if (p.id === 0) {
-          this.productService.createProduct(p)
+        const productData = { ...this.product, ...this.productForm.value };
+        console.log('Selected Image File:', this.selectedImageFile);
+        console.log('selected image name:', this.selectedImageFile?.name);
+        const formData = new FormData();
+        formData.append('productName', productData.productName);
+        formData.append('productCode', productData.productCode);
+        formData.append('starRating', productData.starRating.toString());
+        formData.append('description', productData.description);
+        formData.append('price', productData.price.toString());
+        formData.append('releaseDate', productData.releaseDate);
+  
+        // Append the selected image file to the FormData if it exists
+        if (this.selectedImageFile) {
+          formData.append('image', this.selectedImageFile, this.selectedImageFile.name);
+        }
+  
+        if (productData.id === 0) {
+          this.productService.createProductWithImage(formData)
             .subscribe({
               next: x => {
-                console.log(x);
+                console.log(productData);
                 return this.onSaveComplete();
               },
               error: err => this.errorMessage = err
             });
         } else {
-          this.productService.updateProduct(p)
-            .subscribe({
-              next: () => this.onSaveComplete(),
-              error: err => this.errorMessage = err
-            });
+          console.log(productData.id);
+          if (this.selectedImageFile) {
+            // Update with image
+            this.productService.updateProductWithImage(productData.id, formData)
+              .subscribe({
+                next: () => this.onSaveComplete(),
+                error: err => this.errorMessage = err
+              });
+          } else {
+            // Update without image
+            this.productService.updateProduct(productData)
+              .subscribe({
+                next: () => this.onSaveComplete(),
+                error: err => this.errorMessage = err
+              });
+          }
         }
       } else {
         this.onSaveComplete();
@@ -184,11 +221,17 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
       this.errorMessage = 'Please correct the validation errors.';
     }
   }
+  
+  
 
   onSaveComplete(): void {
     // Reset the form to clear the flags
     this.productForm.reset();
     this.router.navigate(['/products']);
   }
+
+
+
+
 
 }

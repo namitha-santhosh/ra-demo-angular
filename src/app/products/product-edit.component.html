@@ -59,13 +59,47 @@
 
       <div class="form-group row mb-2">
         <label class="col-md-2 col-form-label"
-               for="imageUrl">Image URL</label>
+               for="releaseDate">Release Date</label>
+
         <div class="col-md-8">
           <input class="form-control"
-                 id="imageUrl"
+                 id="releaseDate"
                  type="text"
-                 placeholder="Enter the image Url"
-                 formControlName="imageUrl"
+                 placeholder="Enter Release Date"
+                 formControlName="releaseDate"
+                 [ngClass]="{'is-invalid': displayMessage.releaseDate}" />
+          <span class="invalid-feedback">
+            {{displayMessage.releaseDate}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="price">Price</label>
+
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="price"
+                 type="text"
+                 placeholder="Enter Price"
+                 formControlName="price"
+                 [ngClass]="{'is-invalid': displayMessage.price}" />
+          <span class="invalid-feedback">
+            {{displayMessage.price}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="imageFile">Image Upload</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="imageFile"
+                 type="file"
+                 (change)="onImageChange($event)"
+                 accept=".jpg, .jpeg, .png"
                  [ngClass]="{'is-invalid': displayMessage.imageUrl}" />
           <span class="invalid-feedback">
             {{displayMessage.imageUrl}}

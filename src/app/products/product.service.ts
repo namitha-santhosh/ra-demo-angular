@@ -12,6 +12,7 @@ import { Product } from './product';
 })
 export class ProductService {
   private productsUrl = 'http://127.0.0.1:8000/api/products'; // JSON Server endpoint
+  private editUrl = 'http://127.0.0.1:8000/products/api/imgedit'
 
   constructor(private http: HttpClient) { }
 
@@ -35,15 +36,22 @@ export class ProductService {
       );
   }
 
-  createProduct(product: Product): Observable<Product> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    product.id = null;
-    return this.http.post<Product>(this.productsUrl, product, { headers })
-      .pipe(
-        tap(data => console.log('createProduct: ' + JSON.stringify(data))),
-        catchError(this.handleError)
-      );
+  createProductWithImage(formData: FormData): Observable<Product> {
+    // Create headers with the content type for multipart/form-data
+    const headers = new HttpHeaders({
+      // No need to set 'Content-Type' here; it will be set automatically for FormData
+      // Other headers, if needed, can be added here
+    });
+  
+    return this.http.post<Product>(this.productsUrl, formData, { headers }).pipe(
+      tap((data: any) => {
+        console.log('createProductWithImage Response:', data);
+      }),
+      catchError(this.handleError)
+    );
   }
+  
+  
 
   deleteProduct(id: number): Observable<{}> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -63,6 +71,17 @@ export class ProductService {
         tap(() => console.log('updateProduct: ' + product.id)),
         // Return the product on an update
         map(() => product),
+        catchError(this.handleError)
+      );
+  } 
+
+  updateProductWithImage(productId: number, productData: FormData): Observable<Product> {
+    const url = `${this.editUrl}/${productId}`;
+    return this.http.put<Product>(url, productData)
+      .pipe(
+        tap(() => console.log('updateProduct: ' + productId)),
+        // Return the product on an update
+        map(() => productData as unknown as Product), // Cast FormData to Product for simplicity
         catchError(this.handleError)
       );
   }

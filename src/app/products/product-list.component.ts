@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from './product';
 import { ProductService } from './product.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   templateUrl: './product-list.component.html',
@@ -28,8 +29,19 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
 
 
-  constructor(private productService: ProductService, private router: Router) { }
+  constructor(private productService: ProductService, private router: Router, private http:HttpClient) { }
 
+  fetchImage(imageUrl: string): void {
+    this.http.get(imageUrl, { responseType: 'blob' }).subscribe(response => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // Assuming you have an image element in your template with an ID "productImage"
+        const imageElement = document.getElementById('productImage') as HTMLImageElement;
+        imageElement.src = reader.result as string;
+      };
+      reader.readAsDataURL(response);
+    });
+  }
 
   performFilter(filterBy: string): Product[] {
     filterBy = filterBy.toLocaleLowerCase();
@@ -58,8 +70,4 @@ export class ProductListComponent implements OnInit {
       error: err => this.errorMessage = err
     });
   }
-
-  
-
-  
 }
