@@ -168,7 +168,7 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   this.selectedImageFile = file;
   }
 
-  saveProduct(): void {
+  /* saveProduct(): void {
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
         const productData = { ...this.product, ...this.productForm.value };
@@ -197,7 +197,8 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
               error: err => this.errorMessage = err
             });
         } else {
-          console.log(productData.id);
+          console.log('this.selectedImageFile:', this.selectedImageFile);
+
           if (this.selectedImageFile) {
             // Update with image
             this.productService.updateProductWithImage(productData.id, formData)
@@ -220,7 +221,69 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.errorMessage = 'Please correct the validation errors.';
     }
+  } */
+
+  saveProduct(): void {
+    if (this.productForm.valid && this.productForm.dirty) {
+      const productData = { ...this.product, ...this.productForm.value };
+      console.log('Selected Image File:', this.selectedImageFile);
+      console.log('selected image name:', this.selectedImageFile?.name);
+      const formData = new FormData();
+      formData.append('productName', productData.productName);
+      formData.append('productCode', productData.productCode);
+      formData.append('starRating', productData.starRating.toString());
+      formData.append('description', productData.description);
+      formData.append('price', productData.price.toString());
+      formData.append('releaseDate', productData.releaseDate);
+  
+      if (this.selectedImageFile) {
+        formData.append('image', this.selectedImageFile, this.selectedImageFile.name);
+      }
+  
+      if (productData.id === 0) {
+        this.productService.createProductWithImage(formData)
+          .subscribe(
+            (response) => {
+              console.log('Create Product Response:', response);
+              this.onSaveComplete();
+            },
+            (error) => {
+              console.error('Error creating product:', error);
+              this.errorMessage = 'Error creating product.';
+            }
+          );
+      } else if (this.selectedImageFile) {
+        // Update with image
+        this.productService.updateProductWithImage(productData.id, formData)
+          .subscribe(
+            (response) => {
+              console.log('Update Product with Image Response:', response);
+              this.onSaveComplete();
+            },
+            (error) => {
+              console.error('Error updating product with image:', error);
+              this.errorMessage = 'Error updating product with image.';
+            }
+          );
+      } else {
+        // Update without image
+        this.productService.updateProduct(productData)
+          .subscribe(
+            (response) => {
+              console.log('Update Product Response:', response);
+              this.onSaveComplete();
+            },
+            (error) => {
+              console.error('Error updating product:', error);
+              this.errorMessage = 'Error updating product.';
+            }
+          );
+      }
+    } else {
+      this.errorMessage = 'Please correct the validation errors.';
+    }
   }
+  
   
   
 

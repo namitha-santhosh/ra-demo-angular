@@ -13,7 +13,7 @@ import { AuthService } from '../auth.service';
 })
 export class ProductService {
   private productsUrl = 'http://127.0.0.1:8000/api/products'; // JSON Server endpoint
-  private editUrl = 'http://127.0.0.1:8000/products/api/imgedit'
+  private editUrl = 'http://127.0.0.1:8000/api/products/imgedit'
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -78,7 +78,7 @@ export class ProductService {
     const url = `${this.productsUrl}/${product.id}`;
     return this.http.put<Product>(url, product, { headers })
       .pipe(
-        tap(() => console.log('updateProduct: ' + product.id)),
+        tap(() => console.log('Inside updateProduct: ' + product.id)),
         // Return the product on an update
         map(() => product),
         catchError(this.handleError)
@@ -90,9 +90,10 @@ export class ProductService {
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}`});
 
     const url = `${this.editUrl}/${productId}`;
+    console.log('Request URL:', url);
     return this.http.put<Product>(url, productData, { headers })
       .pipe(
-        tap(() => console.log('updateProduct: ' + productId)),
+        tap(() => console.log('Inside updateProductwithImg: ' + productId)),
         // Return the product on an update
         map(() => productData as unknown as Product), // Cast FormData to Product for simplicity
         catchError(this.handleError)
