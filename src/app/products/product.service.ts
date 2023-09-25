@@ -6,6 +6,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 
 import { Product } from './product';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,16 @@ export class ProductService {
   private productsUrl = 'http://127.0.0.1:8000/api/products'; // JSON Server endpoint
   private editUrl = 'http://127.0.0.1:8000/products/api/imgedit'
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl)
+
+    // Retrieve the JWT token from the AuthService
+    const token = this.authService.getToken();
+
+    // Add the JWT token to the request headers
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<Product[]>(this.productsUrl, { headers })
       .pipe(
         tap(data => console.log(JSON.stringify(data))),
         catchError(this.handleError)
@@ -25,11 +32,13 @@ export class ProductService {
   }
 
   getProduct(id: number): Observable<Product> {
+    const token = this.authService.getToken();
     if (id === 0) {
       return of(this.initializeProduct());
     }
     const url = `${this.productsUrl}/${id}`;
-    return this.http.get<Product>(url)
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<Product>(url, { headers })
       .pipe(
         tap(data => console.log('getProduct: ' + JSON.stringify(data))),
         catchError(this.handleError)
@@ -37,11 +46,9 @@ export class ProductService {
   }
 
   createProductWithImage(formData: FormData): Observable<Product> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     // Create headers with the content type for multipart/form-data
-    const headers = new HttpHeaders({
-      // No need to set 'Content-Type' here; it will be set automatically for FormData
-      // Other headers, if needed, can be added here
-    });
   
     return this.http.post<Product>(this.productsUrl, formData, { headers }).pipe(
       tap((data: any) => {
@@ -54,7 +61,9 @@ export class ProductService {
   
 
   deleteProduct(id: number): Observable<{}> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const token = this.authService.getToken();
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
     const url = `${this.productsUrl}/${id}`;
     return this.http.delete<Product>(url, { headers })
       .pipe(
@@ -64,7 +73,8 @@ export class ProductService {
   }
 
   updateProduct(product: Product): Observable<Product> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`});
     const url = `${this.productsUrl}/${product.id}`;
     return this.http.put<Product>(url, product, { headers })
       .pipe(
@@ -76,8 +86,11 @@ export class ProductService {
   } 
 
   updateProductWithImage(productId: number, productData: FormData): Observable<Product> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}`});
+
     const url = `${this.editUrl}/${productId}`;
-    return this.http.put<Product>(url, productData)
+    return this.http.put<Product>(url, productData, { headers })
       .pipe(
         tap(() => console.log('updateProduct: ' + productId)),
         // Return the product on an update

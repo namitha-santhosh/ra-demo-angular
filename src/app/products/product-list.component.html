@@ -45,7 +45,8 @@
                    [src]="product.imageUrl"
                    [title]="product.productName"
                    [style.width.px]="imageWidth"
-                   [style.margin.px]="imageMargin">
+                   [style.margin.px]="imageMargin"
+                   id = "productImage">
             </td>
             <td>
               <a [routerLink]="['/products', product.id]">

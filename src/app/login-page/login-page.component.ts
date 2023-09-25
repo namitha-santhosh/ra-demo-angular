@@ -37,9 +37,13 @@ export class LoginPageComponent implements OnInit {
       .subscribe(
         (response) => {
           // Handle the successful login response here
-          const message = response.message;
-          const fullName = response.fullName;
-          alert(`${message}, Welcome ${fullName}`);
+          //const message = response.message;
+          //const fullName = response.fullName;
+          const jwtToken = response.token; // Assuming the token key is 'token'
+
+          // Set the JWT token in AuthService for later use
+          this.authService.setToken(jwtToken);
+          alert(`Login Successful, Welcome`);
           this.authService.login();
           this.loginForm.reset();
           this.router.navigate(['products']);
