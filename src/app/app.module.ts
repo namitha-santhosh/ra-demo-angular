@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppNavbarComponent } from './app-navbar.component';
@@ -12,6 +12,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
 import { AuthService } from './auth.service';
 import { TestComponent } from './test/test.component';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { TestComponent } from './test/test.component';
     WelcomeComponent,
     LoginPageComponent,
     SignupPageComponent, 
-    AppNavbarComponent, TestComponent,
+    AppNavbarComponent, TestComponent, CategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +34,8 @@ import { TestComponent } from './test/test.component';
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'} 
     ]),
-    ProductModule
+    ProductModule, 
+    FormsModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

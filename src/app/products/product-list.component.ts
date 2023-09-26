@@ -35,7 +35,6 @@ export class ProductListComponent implements OnInit {
     this.http.get(imageUrl, { responseType: 'blob' }).subscribe(response => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        // Assuming you have an image element in your template with an ID "productImage"
         const imageElement = document.getElementById('productImage') as HTMLImageElement;
         imageElement.src = reader.result as string;
       };
@@ -49,7 +48,6 @@ export class ProductListComponent implements OnInit {
       product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
 
-  // Checks both the product name and tags
   performFilter2(filterBy: string): Product[] {
     filterBy = filterBy.toLocaleLowerCase();
     return this.products.filter((product: Product) =>

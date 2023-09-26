@@ -10,6 +10,7 @@ import { ProductDetailComponent } from './product-detail.component';
 import { ProductEditComponent } from './product-edit.component';
 import { ProductEditGuard } from './product-edit.guard';
 import { AuthGuard } from '../route.guard';
+import { CategoryComponent } from '../category/category.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { AuthGuard } from '../route.guard';
         canActivate: [AuthGuard],
         canDeactivate: [ProductEditGuard],
         component: ProductEditComponent
-      }
+      }, 
+      { path: 'category', canActivate:[AuthGuard], component: CategoryComponent }
     ])
   ],
   declarations: [

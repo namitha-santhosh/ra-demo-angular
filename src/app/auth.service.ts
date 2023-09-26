@@ -19,19 +19,16 @@ export class AuthService {
     return this.token;
   }
 
-  // Simulate user login
   login() {
     this.authState.isAuthenticated = true;
     //console.log(this.authState.isAuthenticated)
   }
 
-  // Simulate user logout
   logout() {
     this.authState.isAuthenticated = false;
     this.token = null;
   }
   
-  // Check if the user is authenticated
   isAuthenticatedUser(): boolean {
     return this.authState.isAuthenticated;
     return !!this.token;

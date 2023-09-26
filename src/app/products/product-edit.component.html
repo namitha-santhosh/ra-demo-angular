@@ -155,6 +155,19 @@
         </div>
       </div>
 
+      <div class="form-group row mb-4">
+        <label class="col-md-2 col-form-label" for="categoryId">Select Category:</label>
+        <div class="col-md-4">
+        <select class="form-control" id="categoryId" formControlName="categoryId" (change)="onCategoryChange($event)">
+          <option [ngValue]="null">Select a Category</option>
+          <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div></div>
+
+
       <div class="form-group row mb-2">
         <div class="offset-md-2 col-md-4">
           <button class="btn btn-primary mr-3"

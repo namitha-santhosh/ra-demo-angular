@@ -10,13 +10,14 @@ import { ProductService } from './product.service';
 
 import { NumberValidators } from '../shared/number.validator';
 import { GenericValidator } from '../shared/generic-validator';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 @Component({
   templateUrl: './product-edit.component.html'
 })
 export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements!: ElementRef[];
-
   pageTitle = 'Product Edit';
   errorMessage = '';
   productForm!: FormGroup;
@@ -25,6 +26,7 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   private sub!: Subscription;
 
   selectedImageFile: File | null = null;
+  selectedCategoryName: string | null = null;
 
   // Use with the generic validation message class
   displayMessage: { [key: string]: string } = {};
@@ -39,6 +41,8 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
               private route: ActivatedRoute,
               private router: Router,
               private productService: ProductService,
+              private authService: AuthService,
+              private http: HttpClient
               ) {
 
     // Defines all of the validation messages for the form.
@@ -63,6 +67,9 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.fetchCategories();
+
     this.productForm = this.fb.group({
       productName: ['', [Validators.required,
                          Validators.minLength(3),
@@ -74,7 +81,8 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
       imageFile: [],
       //imageUrl: [''],
       tags: this.fb.array([]),
-      description: ''
+      description: '',
+      categoryId: [null]
     });
 
     // Read the product Id from the route parameter
@@ -168,64 +176,29 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   this.selectedImageFile = file;
   }
 
-  /* saveProduct(): void {
-    if (this.productForm.valid) {
-      if (this.productForm.dirty) {
-        const productData = { ...this.product, ...this.productForm.value };
-        console.log('Selected Image File:', this.selectedImageFile);
-        console.log('selected image name:', this.selectedImageFile?.name);
-        const formData = new FormData();
-        formData.append('productName', productData.productName);
-        formData.append('productCode', productData.productCode);
-        formData.append('starRating', productData.starRating.toString());
-        formData.append('description', productData.description);
-        formData.append('price', productData.price.toString());
-        formData.append('releaseDate', productData.releaseDate);
-  
-        // Append the selected image file to the FormData if it exists
-        if (this.selectedImageFile) {
-          formData.append('image', this.selectedImageFile, this.selectedImageFile.name);
-        }
-  
-        if (productData.id === 0) {
-          this.productService.createProductWithImage(formData)
-            .subscribe({
-              next: x => {
-                console.log(productData);
-                return this.onSaveComplete();
-              },
-              error: err => this.errorMessage = err
-            });
-        } else {
-          console.log('this.selectedImageFile:', this.selectedImageFile);
 
-          if (this.selectedImageFile) {
-            // Update with image
-            this.productService.updateProductWithImage(productData.id, formData)
-              .subscribe({
-                next: () => this.onSaveComplete(),
-                error: err => this.errorMessage = err
-              });
-          } else {
-            // Update without image
-            this.productService.updateProduct(productData)
-              .subscribe({
-                next: () => this.onSaveComplete(),
-                error: err => this.errorMessage = err
-              });
-          }
-        }
-      } else {
-        this.onSaveComplete();
-      }
-    } else {
-      this.errorMessage = 'Please correct the validation errors.';
-    }
-  } */
+  selectedCategoryId: number | null = null;
+  categories: any[] = []; 
+
+  fetchCategories(): void {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/category', { headers }).subscribe((data: any) => {
+      this.categories = data;
+    });
+  }
+  onCategoryChange(event: any): void {
+    const selectedCategoryId = event.target.value;
+    this.selectedCategoryName = this.categories.find(category => category.id === selectedCategoryId)?.name;
+  }
+
+
 
   saveProduct(): void {
     if (this.productForm.valid && this.productForm.dirty) {
       const productData = { ...this.product, ...this.productForm.value };
+      this.selectedCategoryId = productData.categoryId;
+      this.selectedCategoryName = this.categories.find(category => category.id === this.selectedCategoryId)?.name;
       console.log('Selected Image File:', this.selectedImageFile);
       console.log('selected image name:', this.selectedImageFile?.name);
       const formData = new FormData();
@@ -235,7 +208,9 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
       formData.append('description', productData.description);
       formData.append('price', productData.price.toString());
       formData.append('releaseDate', productData.releaseDate);
-  
+      if (this.selectedCategoryName !== null) {
+        formData.append('categoryName', this.selectedCategoryName);
+      }      
       if (this.selectedImageFile) {
         formData.append('image', this.selectedImageFile, this.selectedImageFile.name);
       }
@@ -288,7 +263,6 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   
 
   onSaveComplete(): void {
-    // Reset the form to clear the flags
     this.productForm.reset();
     this.router.navigate(['/products']);
   }

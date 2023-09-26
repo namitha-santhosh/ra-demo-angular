@@ -19,10 +19,8 @@ export class ProductService {
 
   getProducts(): Observable<Product[]> {
 
-    // Retrieve the JWT token from the AuthService
     const token = this.authService.getToken();
 
-    // Add the JWT token to the request headers
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<Product[]>(this.productsUrl, { headers })
       .pipe(
@@ -48,7 +46,6 @@ export class ProductService {
   createProductWithImage(formData: FormData): Observable<Product> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    // Create headers with the content type for multipart/form-data
   
     return this.http.post<Product>(this.productsUrl, formData, { headers }).pipe(
       tap((data: any) => {
@@ -79,7 +76,6 @@ export class ProductService {
     return this.http.put<Product>(url, product, { headers })
       .pipe(
         tap(() => console.log('Inside updateProduct: ' + product.id)),
-        // Return the product on an update
         map(() => product),
         catchError(this.handleError)
       );

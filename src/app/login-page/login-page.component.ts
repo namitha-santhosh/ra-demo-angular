@@ -36,12 +36,8 @@ export class LoginPageComponent implements OnInit {
       .post<any>('http://localhost:8000/api/login', credentials)
       .subscribe(
         (response) => {
-          // Handle the successful login response here
-          //const message = response.message;
-          //const fullName = response.fullName;
-          const jwtToken = response.token; // Assuming the token key is 'token'
+          const jwtToken = response.token; 
 
-          // Set the JWT token in AuthService for later use
           this.authService.setToken(jwtToken);
           alert(`Login Successful, Welcome`);
           this.authService.login();
@@ -49,14 +45,12 @@ export class LoginPageComponent implements OnInit {
           this.router.navigate(['products']);
         },
         (error) => {
-          // Handle login error here
           alert('User not found or invalid password');
         }
       );
   }
 
   logout() {
-    // Implement the logout logic if needed
   }
 }
 
