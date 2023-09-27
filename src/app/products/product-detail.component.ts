@@ -55,6 +55,7 @@ export class ProductDetailComponent implements OnInit {
       this.cartService.addToCart(productId).subscribe(
         (response: any) => {
           console.log('Product added to cart:', response);
+          alert("Product added to cart");
           this.router.navigate(['/products']);
           // You can provide user feedback here if needed
         },
