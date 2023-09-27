@@ -1,0 +1,15 @@
+<div>
+    <h2>Cart</h2>
+    <ul>
+      <li *ngFor="let product of cart.products">
+        {{ product.name }}
+        <button (click)="removeProduct(product.id)">Remove</button>
+      </li>
+    </ul>
+    <div>
+      <label for="productId">Product ID:</label>
+      <input type="number" id="productId" [(ngModel)]="productId">
+      <button (click)="addProduct()">Add to Cart</button>
+    </div>
+  </div>
+  
