@@ -11,6 +11,8 @@ import { ProductEditComponent } from './product-edit.component';
 import { ProductEditGuard } from './product-edit.guard';
 import { AuthGuard } from '../route.guard';
 import { CategoryComponent } from '../category/category.component';
+import { AdminGuard } from '../admin.guard';
+import { CategoryAddComponent } from '../category-add/category-add.component';
 
 @NgModule({
   imports: [
@@ -21,11 +23,12 @@ import { CategoryComponent } from '../category/category.component';
       { path: 'products/:id', canActivate:[AuthGuard], component: ProductDetailComponent },
       {
         path: 'products/:id/edit',
-        canActivate: [AuthGuard],
+        canActivate: [AdminGuard],
         canDeactivate: [ProductEditGuard],
         component: ProductEditComponent
       }, 
-      { path: 'category', canActivate:[AuthGuard], component: CategoryComponent }
+      { path: 'category', canActivate:[AuthGuard], component: CategoryComponent },
+      { path: 'categories/add', canActivate:[AdminGuard], component: CategoryAddComponent },
     ])
   ],
   declarations: [

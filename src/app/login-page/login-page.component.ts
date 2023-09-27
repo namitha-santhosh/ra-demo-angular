@@ -41,6 +41,13 @@ export class LoginPageComponent implements OnInit {
           this.authService.setToken(jwtToken);
           alert(`Login Successful, Welcome`);
           this.authService.login();
+
+          if (credentials.email === 'admin@gmail.com' && credentials.password === 'admin123') {
+            this.authService.setAdminStatus(true);
+          } else {
+            this.authService.setAdminStatus(false);
+          }
+          
           this.loginForm.reset();
           this.router.navigate(['products']);
         },

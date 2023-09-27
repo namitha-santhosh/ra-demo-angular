@@ -13,6 +13,7 @@ import { SignupPageComponent } from './signup-page/signup-page.component';
 import { AuthService } from './auth.service';
 import { TestComponent } from './test/test.component';
 import { CategoryComponent } from './category/category.component';
+import { CategoryAddComponent } from './category-add/category-add.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { CategoryComponent } from './category/category.component';
     WelcomeComponent,
     LoginPageComponent,
     SignupPageComponent, 
-    AppNavbarComponent, TestComponent, CategoryComponent,
+    AppNavbarComponent, TestComponent, CategoryComponent, CategoryAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +33,7 @@ import { CategoryComponent } from './category/category.component';
       { path: 'signUp', component:SignupPageComponent},
       {path: 'test', component:TestComponent},
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-      { path: '**', redirectTo: 'welcome', pathMatch: 'full'} 
+      { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
     ]),
     ProductModule, 
     FormsModule

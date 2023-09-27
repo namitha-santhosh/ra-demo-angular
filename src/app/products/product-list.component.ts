@@ -4,6 +4,7 @@ import { Product } from './product';
 import { ProductService } from './product.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 @Component({
   templateUrl: './product-list.component.html',
@@ -29,7 +30,7 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
 
 
-  constructor(private productService: ProductService, private router: Router, private http:HttpClient) { }
+  constructor(private productService: ProductService, private router: Router, private http:HttpClient, private authService: AuthService) { }
 
   fetchImage(imageUrl: string): void {
     this.http.get(imageUrl, { responseType: 'blob' }).subscribe(response => {
@@ -68,4 +69,9 @@ export class ProductListComponent implements OnInit {
       error: err => this.errorMessage = err
     });
   }
+
+  isAdminUser(): boolean {
+    return this.authService.isAdmin();
+  }
+  
 }

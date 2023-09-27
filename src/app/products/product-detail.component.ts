@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Product } from './product';
 import { ProductService } from './product.service';
+import { AuthService } from '../auth.service';
+import { CartService } from './CartService';
 
 @Component({
   templateUrl: './product-detail.component.html',
@@ -18,6 +20,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private productService: ProductService,
+              private authService: AuthService,
+              private cartService: CartService
               ) {
   }
 
@@ -42,5 +46,24 @@ export class ProductDetailComponent implements OnInit {
     this.router.navigate(['/products']);
   }
 
+  isAdminUser(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  addToCart(productId: number): void {
+    if (productId !== null) { // Check if productId is not null
+      this.cartService.addToCart(productId).subscribe(
+        (response: any) => {
+          console.log('Product added to cart:', response);
+          this.router.navigate(['/products']);
+          // You can provide user feedback here if needed
+        },
+        (error: any) => {
+          console.error('Error adding product to cart:', error);
+          // Handle errors or provide user feedback
+        }
+      );
+    }
+  }
 
 }

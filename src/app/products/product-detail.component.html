@@ -62,8 +62,14 @@
         </button>
         <button class="btn btn-outline-primary"
                 style="width:80px"
+                *ngIf="isAdminUser()"
                 [routerLink]="['/products', product.id, 'edit']">
           Edit
+        </button>
+        <button class="btn btn-outline-primary"
+        style="width:80px"
+        (click)="product.id && addToCart(product.id)">
+        Add to Cart
         </button>
       </div>
     </div>
