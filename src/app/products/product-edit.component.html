@@ -98,6 +98,7 @@
           <input class="form-control"
                  id="imageFile"
                  type="file"
+                 formControlName="imageFile"
                  (change)="onImageChange($event)"
                  accept=".jpg, .jpeg, .png"
                  [ngClass]="{'is-invalid': displayMessage.imageUrl}" />

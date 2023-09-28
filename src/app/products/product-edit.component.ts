@@ -136,12 +136,12 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
       this.productForm.reset();
     }
     this.product = product;
-
     if (this.product.id === 0) {
       this.pageTitle = 'Add Product';
     } else {
       this.pageTitle = `Edit Product: ${this.product.productName}`;
     }
+
 
     // Update the data on the form
     this.productForm.patchValue({
@@ -151,10 +151,12 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
       releaseDate: this.product.releaseDate,
       price: this.product.price,
       imageUrl: this.product.imageUrl,
-      description: this.product.description
-    });
+      description: this.product.description,
+        });
+
     this.productForm.setControl('tags', this.fb.array(this.product.tags || []));
   }
+
 
   deleteProduct(): void {
     if (this.product.id === 0) {
@@ -174,11 +176,16 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   onImageChange(event: any): void {
   const file = event.target.files[0];
   this.selectedImageFile = file;
+  const imageControl = this.productForm.get('image');
+  if (imageControl) {
+    imageControl.patchValue(file);
+  }
   }
 
 
   selectedCategoryId: number | null = null;
   categories: any[] = []; 
+
 
   fetchCategories(): void {
     const token = this.authService.getToken();
@@ -195,6 +202,8 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   saveProduct(): void {
+    console.log('Form Valid:', this.productForm.valid);
+    console.log('Form Dirty:', this.productForm.dirty);
     if (this.productForm.valid && this.productForm.dirty) {
       const productData = { ...this.product, ...this.productForm.value };
       this.selectedCategoryId = productData.categoryId;

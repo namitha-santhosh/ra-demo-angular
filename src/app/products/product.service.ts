@@ -87,11 +87,11 @@ export class ProductService {
 
     const url = `${this.editUrl}/${productId}`;
     console.log('Request URL:', url);
-    return this.http.put<Product>(url, productData, { headers })
+    return this.http.post<Product>(url, productData, { headers })
       .pipe(
         tap(() => console.log('Inside updateProductwithImg: ' + productId)),
         // Return the product on an update
-        map(() => productData as unknown as Product), // Cast FormData to Product for simplicity
+        map((response: Product) => response), // Cast FormData to Product for simplicity
         catchError(this.handleError)
       );
   }
@@ -118,7 +118,8 @@ export class ProductService {
       price: 0,
       description: '',
       starRating: 0,
-      imageUrl: ''
+      imageUrl: '',
+      category: 0
     };
   }
 }

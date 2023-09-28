@@ -9,5 +9,6 @@ export interface Product {
   description: string;
   starRating: number;
   imageUrl: string;
+  category: number|null;
 }
 
