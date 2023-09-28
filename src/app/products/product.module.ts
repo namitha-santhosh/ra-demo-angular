@@ -13,6 +13,7 @@ import { AuthGuard } from '../route.guard';
 import { CategoryComponent } from '../category/category.component';
 import { AdminGuard } from '../admin.guard';
 import { CategoryAddComponent } from '../category-add/category-add.component';
+import { ViewCategoryComponent } from '../view-category/view-category.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { CategoryAddComponent } from '../category-add/category-add.component';
         component: ProductEditComponent
       }, 
       { path: 'category', canActivate:[AuthGuard], component: CategoryComponent },
+      { path: 'view category', canActivate:[AuthGuard], component: ViewCategoryComponent},
       { path: 'categories/add', canActivate:[AdminGuard], component: CategoryAddComponent },
     ])
   ],

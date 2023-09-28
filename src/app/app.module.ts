@@ -17,6 +17,7 @@ import { CategoryAddComponent } from './category-add/category-add.component';
 import { EditCartComponent } from './edit-cart/edit-cart.component';
 import { AuthGuard } from './route.guard';
 import { ViewCartComponent } from './viewcart/viewcart.component';
+import { ViewCategoryComponent } from './view-category/view-category.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { ViewCartComponent } from './viewcart/viewcart.component';
     WelcomeComponent,
     LoginPageComponent,
     SignupPageComponent, 
-    AppNavbarComponent, TestComponent, CategoryComponent, CategoryAddComponent, EditCartComponent, ViewCartComponent,
+    AppNavbarComponent, TestComponent, CategoryComponent, CategoryAddComponent, EditCartComponent, ViewCartComponent, ViewCategoryComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,46 @@
+<div class="card">
+    <div class="card-header">
+        Category List
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class=" table mb-0">
+                <thead>
+                    <tr>
+                        <th>Category Id</th>
+                        <th>Category Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let category of categories">
+                        <td>{{category.id}}</td>
+                        <td>{{category.name}}</td>
+                        <td><button class="btn btn-outline-primary btn-sm"
+                            (click)="deleteCategory(category.id)">
+                            Delete
+                        </button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+<div class="row mt-4">
+    <div class="col-md-4">
+      <button class="btn btn-outline-secondary mr-3"
+              style="width:80px"
+              (click)="onBack()">
+        <i class="fa fa-chevron-left"></i> Back
+      </button>
+      <button class="btn btn-outline-primary"
+              style="width:100px"
+              [routerLink]="['/categories/add']">
+        Add New
+      </button>
+    </div>
+  </div>
+</div>
+

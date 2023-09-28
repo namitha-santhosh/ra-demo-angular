@@ -1,36 +1,30 @@
 <div class="card">
     <div class="card-header">
-        Cart for {{ username }}
-    </div>
+        Shopping Cart for {{ username }}
+      </div>
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table mb-0">
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Product Price</th>
-                    <th>Product Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let product of products">
-                    <td>{{product.name}}</td>
-                    <td>{{product.price | currency:"USD":"symbol":"1.2-2"}}</td>
-                    <td>{{product.description}}</td>
-                </tr>
-            </tbody>
-        </table>
-        </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <button class="btn btn-outline-primary"
-                style="width:80px"
-                [routerLink]="['/edit-cart']">
-          Edit
-        </button>
-        </div>
+      
+  <div *ngIf="products.length === 0" class="cart-empty-message">
+    CART EMPTY
+  </div>
+    
+<div class="cart-container">
+    <div class="product-card" *ngFor="let product of products">
+      <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image">
+      <div class="product-details">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <p>Price: ${{ product.price }}</p>
+        <button class="remove" (click)="removeProduct(product.id)">Remove</button>
+      </div>
     </div>
   </div>
+  <div class="col-md-4">
+    <button class="btn btn-outline-secondary mr-3"
+            style="width:80px"
+            (click)="onBack()">
+      <i class="fa fa-chevron-left"></i> Back
+    </button>
+    </div>
+</div>
   
