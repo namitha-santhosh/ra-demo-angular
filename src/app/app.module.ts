@@ -11,13 +11,13 @@ import { ProductModule } from './products/product.module';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
 import { AuthService } from './auth.service';
-import { TestComponent } from './test/test.component';
 import { CategoryComponent } from './category/category.component';
 import { CategoryAddComponent } from './category-add/category-add.component';
 import { EditCartComponent } from './edit-cart/edit-cart.component';
 import { AuthGuard } from './route.guard';
 import { ViewCartComponent } from './viewcart/viewcart.component';
 import { ViewCategoryComponent } from './view-category/view-category.component';
+import { CartService } from './products/CartService';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { ViewCategoryComponent } from './view-category/view-category.component';
     WelcomeComponent,
     LoginPageComponent,
     SignupPageComponent, 
-    AppNavbarComponent, TestComponent, CategoryComponent, CategoryAddComponent, EditCartComponent, ViewCartComponent, ViewCategoryComponent,
+    AppNavbarComponent, CategoryComponent, CategoryAddComponent, EditCartComponent, ViewCartComponent, ViewCategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +43,7 @@ import { ViewCategoryComponent } from './view-category/view-category.component';
     ProductModule, 
     FormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -20,4 +20,19 @@ export class CartService {
     // Send a POST request to add the product to the cart
     return this.http.post(apiUrlWithProductId, {}, { headers });
   }
+
+  fetchCartData(): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<any>('http://127.0.0.1:8000/api/cart/view-cart', { headers });
+  }
+
+  removeProduct(productId: number): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+     return this.http.post<any>(`http://127.0.0.1:8000/api/cart/remove-product/${productId}`, {}, { headers });
+  }
+  
 }

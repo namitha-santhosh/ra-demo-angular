@@ -28,16 +28,20 @@ export class SignupPageComponent {
 
   signUp() {
     if (this.signUpForm.valid) {
-      //console.log(this.signUpForm.value);
   
        this.http.post<any>("http://127.0.0.1:8000/api/register", this.signUpForm.value).subscribe({
-              next: (res) => {
-                alert('Sign Up Successful');
+              next: (response) => {
+                const msg = response.message;
+                alert(`${msg}`);
                 this.signUpForm.reset();
                 this.router.navigate(["login"]);
               },
               error: (err) => {
-                alert("Something went wrong");
+                if (err.status === 409) {
+                  alert(`Email already registered, please login.`);
+                } else {
+                  alert(`Something went wrong`);
+                }
               }
             });
     } else {

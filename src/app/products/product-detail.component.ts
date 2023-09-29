@@ -57,11 +57,9 @@ export class ProductDetailComponent implements OnInit {
           console.log('Product added to cart:', response);
           alert("Product added to cart");
           this.router.navigate(['/products']);
-          // You can provide user feedback here if needed
         },
         (error: any) => {
           console.error('Error adding product to cart:', error);
-          // Handle errors or provide user feedback
         }
       );
     }

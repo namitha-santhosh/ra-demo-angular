@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { CartService } from '../products/CartService';
 
 interface Product {
   id: number;
@@ -20,17 +21,15 @@ export class ViewCartComponent implements OnInit {
   username: string | undefined;
   products: Product[] = [];
 
-  constructor(private http: HttpClient, private authService:AuthService, private router: Router) {}
+  constructor(private http: HttpClient, private authService:AuthService, private router: Router, private cartService: CartService) {}
 
   ngOnInit(): void {
     this.fetchCartData();
   }
 
-  fetchCartData() {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<any>('http://127.0.0.1:8000/api/cart/view-cart', { headers }).subscribe(data => {
+  fetchCartData() {
+    this.cartService.fetchCartData().subscribe((data: { username: string | undefined; products: Product[]; }) => {
       this.username = data.username;
       this.products = data.products;
     });
@@ -38,10 +37,8 @@ export class ViewCartComponent implements OnInit {
 
 
   removeProduct(productId: number) {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
   
-    this.http.post<any>(`http://127.0.0.1:8000/api/cart/remove-product/${productId}`, {}, { headers }).subscribe(
+    this.cartService.removeProduct(productId).subscribe(
       () => {
         alert('Product removed from cart.');
         this.fetchCartData();
