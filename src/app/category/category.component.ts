@@ -19,7 +19,6 @@ export class CategoryComponent implements OnInit {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     
-    // Fetch categories from your API (replace with your actual API endpoint)
     this.http.get('http://127.0.0.1:8000/api/category', { headers }).subscribe((data: any) => {
       this.categories = data;
     });

@@ -51,7 +51,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart(productId: number): void {
-    if (productId !== null) { // Check if productId is not null
+    if (productId !== null) { 
       this.cartService.addToCart(productId).subscribe(
         (response: any) => {
           console.log('Product added to cart:', response);

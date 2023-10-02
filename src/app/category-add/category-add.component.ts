@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Category } from '../category.model';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms'; // Import NgForm
+import { NgForm } from '@angular/forms'; 
 
 @Component({
   selector: 'app-category-add',
@@ -16,7 +16,7 @@ export class CategoryAddComponent implements OnInit {
     name: ''
   };
 
-  @ViewChild('categoryForm') categoryForm!: NgForm; // Reference to the form
+  @ViewChild('categoryForm') categoryForm!: NgForm; 
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {}
 
@@ -24,7 +24,6 @@ export class CategoryAddComponent implements OnInit {
 
   addCategory(): void {
     if (this.categoryForm.invalid) {
-      // Form is invalid, don't submit
       return;
     }
 
@@ -43,7 +42,6 @@ export class CategoryAddComponent implements OnInit {
     );
   }
   cancel(): void {
-    // Redirect to the /products page
     this.router.navigate(['/products']);
   }
 }

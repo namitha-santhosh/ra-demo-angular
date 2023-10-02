@@ -17,7 +17,6 @@ export class CartService {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const apiUrlWithProductId = `http://127.0.0.1:8000/api/cart/add-product/${productId}`;
-    // Send a POST request to add the product to the cart
     return this.http.post(apiUrlWithProductId, {}, { headers });
   }
 

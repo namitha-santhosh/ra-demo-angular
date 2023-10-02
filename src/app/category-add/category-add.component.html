@@ -8,7 +8,6 @@
         <label class="col-md-2 col-form-label" for="name">Category Name:</label>
         <div class="col-md-8">
           <input class="form-control" type="text" id="name" [(ngModel)]="newCategory.name" name="name" required>
-          <!-- Add a validation message -->
           <div *ngIf="categoryForm.controls.name.invalid && categoryForm.controls.name.touched" class="text-danger">
             Category name is required.
           </div>

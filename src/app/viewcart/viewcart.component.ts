@@ -49,6 +49,8 @@ export class ViewCartComponent implements OnInit {
       }
     );
   }
+
+  
   
   
   fetchImage(imageUrl: string): void {
