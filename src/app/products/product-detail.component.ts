@@ -14,7 +14,7 @@ export class ProductDetailComponent implements OnInit {
   pageTitle = 'Product Detail';
   errorMessage = '';
   product: Product | undefined;
-
+  quantity: number = 1; 
   isAuthenticated = false;
 
   constructor(private route: ActivatedRoute,
@@ -23,6 +23,16 @@ export class ProductDetailComponent implements OnInit {
               private authService: AuthService,
               private cartService: CartService
               ) {
+  }
+
+  incrementQuantity() {
+    this.quantity++;
+  }
+
+  decrementQuantity() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
   }
 
 
@@ -50,12 +60,27 @@ export class ProductDetailComponent implements OnInit {
     return this.authService.isAdmin();
   }
 
-  addToCart(productId: number): void {
+  /* addToCart(productId: number): void {
     if (productId !== null) { 
       this.cartService.addToCart(productId).subscribe(
         (response: any) => {
           console.log('Product added to cart:', response);
           alert("Product added to cart");
+          this.router.navigate(['/products']);
+        },
+        (error: any) => {
+          console.error('Error adding product to cart:', error);
+        }
+      );
+    }
+  } */
+
+  addToCart(productId: number): void {
+    if (productId !== null) {
+      this.cartService.addToCart(productId, this.quantity).subscribe(
+        (response: any) => {
+          console.log('Product added to cart:', response);
+          alert('Product added to cart');
           this.router.navigate(['/products']);
         },
         (error: any) => {

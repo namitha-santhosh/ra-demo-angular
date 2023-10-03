@@ -12,13 +12,21 @@ export class CartService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
 
-  addToCart(productId: number): Observable<any> {
+  /* addToCart(productId: number): Observable<any> {
     const token = this.authService.getToken();
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const apiUrlWithProductId = `http://127.0.0.1:8000/api/cart/add-product/${productId}`;
     return this.http.post(apiUrlWithProductId, {}, { headers });
-  }
+  } */
+
+  addToCart(productId: number, quantity: number): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const apiUrlWithProductId = `http://127.0.0.1:8000/api/cart/add-product/${productId}`;
+    return this.http.post(apiUrlWithProductId, { quantity }, { headers });
+}
+
 
   fetchCartData(): Observable<any> {
     const token = this.authService.getToken();

@@ -18,6 +18,7 @@ import { AuthGuard } from './route.guard';
 import { ViewCartComponent } from './viewcart/viewcart.component';
 import { ViewCategoryComponent } from './view-category/view-category.component';
 import { CartService } from './products/CartService';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { CartService } from './products/CartService';
     WelcomeComponent,
     LoginPageComponent,
     SignupPageComponent, 
-    AppNavbarComponent, CategoryComponent, CategoryAddComponent, EditCartComponent, ViewCartComponent, ViewCategoryComponent,
+    AppNavbarComponent, CategoryComponent, CategoryAddComponent, EditCartComponent, ViewCartComponent, ViewCategoryComponent, AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +38,7 @@ import { CartService } from './products/CartService';
       { path: 'signUp', component:SignupPageComponent},
       { path: 'cart', canActivate:[AuthGuard], component:ViewCartComponent},
       { path: 'edit-cart', canActivate:[AuthGuard], component: EditCartComponent},
+      { path: 'admin', canActivate:[AuthGuard], component: AdminComponent},
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
     ]),

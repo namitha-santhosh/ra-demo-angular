@@ -73,6 +73,20 @@
         </button>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-3">Quantity:</div>
+      <div class="col-md-6">
+        <button class="btn btn-outline-secondary mr-2"
+                (click)="decrementQuantity()">
+          <i class="fa fa-minus"></i>
+        </button>
+        {{ quantity }}
+        <button class="btn btn-outline-secondary ml-2"
+                (click)="incrementQuantity()">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </div>
 
   </div>
 
