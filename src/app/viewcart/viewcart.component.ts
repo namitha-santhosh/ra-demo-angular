@@ -4,12 +4,13 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { CartService } from '../products/CartService';
 
-interface Product {
+interface CartItem {
   id: number;
   name: string;
   price: number;
   description: string;
   imageUrl: string;
+  quantity: number;
 }
 
 @Component({
@@ -19,7 +20,8 @@ interface Product {
 })
 export class ViewCartComponent implements OnInit {
   username: string | undefined;
-  products: Product[] = [];
+  //products: Product[] = [];
+  cartItems: CartItem[] = [];
 
   constructor(private http: HttpClient, private authService:AuthService, private router: Router, private cartService: CartService) {}
 
@@ -29,9 +31,10 @@ export class ViewCartComponent implements OnInit {
 
 
   fetchCartData() {
-    this.cartService.fetchCartData().subscribe((data: { username: string | undefined; products: Product[]; }) => {
+    this.cartService.fetchCartData().subscribe((data: { username: string | undefined; cartItems: CartItem[]; }) => {
       this.username = data.username;
-      this.products = data.products;
+      //this.products = data.products;
+      this.cartItems = data.cartItems;
     });
   }
 

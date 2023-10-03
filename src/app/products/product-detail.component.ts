@@ -75,11 +75,12 @@ export class ProductDetailComponent implements OnInit {
     }
   } */
 
-  addToCart(productId: number): void {
+  addToCart(productId: number, quantity: number): void {
     if (productId !== null) {
-      this.cartService.addToCart(productId, this.quantity).subscribe(
+      this.cartService.addToCart(productId, quantity).subscribe(
         (response: any) => {
           console.log('Product added to cart:', response);
+          console.log('Quantity:', this.quantity);
           alert('Product added to cart');
           this.router.navigate(['/products']);
         },
