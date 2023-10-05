@@ -205,7 +205,7 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log('Form Valid:', this.productForm.valid);
     console.log('Form Dirty:', this.productForm.dirty);
     if (this.productForm.valid && this.productForm.dirty) {
-      const productData = { ...this.product, ...this.productForm.value };
+      const productData = { ...this.product, ...this.productForm.value};
       this.selectedCategoryId = productData.categoryId;
       this.selectedCategoryName = this.categories.find(category => category.id === this.selectedCategoryId)?.name;
       console.log('Selected Image File:', this.selectedImageFile);

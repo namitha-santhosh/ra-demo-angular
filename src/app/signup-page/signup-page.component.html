@@ -1,50 +1,58 @@
 
-<div class="container">
-  <form [formGroup]="signUpForm" (ngSubmit)="signUp()" class="form-box1">
-    <h3>SignUp</h3>
-
-    <div class="form-group">
-      <label for="fullname">Full Name</label>
-      <input type="text" formControlName="fullname" class="form-control mb-3 mt-3" placeholder="Enter Full Name" />
-      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('fullname')?.hasError('required') && signUpForm.get('fullname')?.touched" class="error-message">
-        Full Name is required.
+<div class="container vh-100">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-lg-12 col-xl-11">
+      <div class="card text-black" style="border-radius: 25px;">
+        <div class="card-body p-md-5">
+          <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+              <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: rgb(6, 89, 161);">Sign up</p>
+              <form [formGroup]="signUpForm" (ngSubmit)="signUp()" class="mx-1 mx-md-4">
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fa fa-user fa-lg me-3 fa-fw" style="color: rgb(7, 138, 199);"></i> 
+                  <div class="form-outline flex-fill mb-0">
+                    <input type="text" id="fullname" formControlName="fullname" class="form-control" />
+                    <label style="color: rgb(6, 89, 161);" class="form-label" for="fullname">Full Name</label>
+                  </div>
+                </div>
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fa fa-phone fa-lg me-3 fa-fw" style="color: rgb(7, 138, 199);"></i>
+                  <div class="form-outline flex-fill mb-0">
+                    <input type="text" id="contact" formControlName="contact" class="form-control" />
+                    <label style="color: rgb(6, 89, 161);" class="form-label" for="contact">Contact Number</label>
+                  </div>
+                </div>
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fa fa-envelope fa-lg me-3 fa-fw" style="color: rgb(7, 138, 199);"></i>
+                  <div class="form-outline flex-fill mb-0">
+                    <input type="email" id="email" formControlName="email" class="form-control" />
+                    <label style="color: rgb(6, 89, 161);" class="form-label" for="email">Your Email</label>
+                  </div>
+                </div>
+                <div class="d-flex flex-row align-items-center mb-4">
+                  <i class="fa fa-lock fa-lg me-3 fa-fw" style="color: rgb(7, 138, 199);"></i>
+                  <div class="form-outline flex-fill mb-0">
+                    <input type="password" id="password" formControlName="password" class="form-control" />
+                    <label style="color: rgb(6, 89, 161);" class="form-label" for="password">Password</label>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                  <div class="text-center">
+                    <span>Already have an account? Login </span>
+                    <a routerLink="/login">here</a>
+                    <br/>
+                    <button type="submit" class="btn btn-primary btn-lg mt-4">Register</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+              <img src="https://img.freepik.com/free-vector/isometric-laptop-with-shopping-cart-keypad_1262-16544.jpg?w=740&t=st=1696361373~exp=1696361973~hmac=52207ba6e6fb843f703c17a7c7d30bca398f3c77497ba47872db228adfdb6bac"
+                class="img-fluid" alt="Sample image">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="form-group">
-      <label for="contact">Phone Number</label>
-      <input type="text" formControlName="contact" class="form-control mb-3 mt-3" placeholder="Enter Phone Number" />
-      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('contact')?.hasError('minlength') && signUpForm.get('contact')?.touched" class="error-message">
-        Please enter a valid phone number.
-      </div> 
-    </div>
-
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" formControlName="email" class="form-control mb-3 mt-3" placeholder="Enter Email" />
-      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('email')?.hasError('required') && signUpForm.get('email')?.touched" class="error-message">
-        Email is required.
-      </div>
-      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('email')?.hasError('email') && signUpForm.get('email')?.touched" class="error-message">
-        Invalid email format.
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" formControlName="password" class="form-control mb-3 mt-3" placeholder="Enter Password" />
-      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('password')?.hasError('required') && signUpForm.get('password')?.touched" class="error-message">
-        Password is required.
-      </div>
-      <div style="color:red;font-size: smaller;" *ngIf="signUpForm.get('password')?.hasError('minlength') && signUpForm.get('password')?.touched" class="error-message">
-        Password must be at least 5 characters long.
-      </div>
-    </div>
-
-    <span>Already have an account? </span>
-    <a routerLink="/login">Sign In</a>
-    <br />
-    <button type="submit" class="btn btn-success">Signup</button>
-  </form>
+  </div>
 </div>
-<router-outlet></router-outlet>

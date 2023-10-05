@@ -1,0 +1,13 @@
+.product-card {
+    width: 100%;
+    margin-bottom: 20px; /* Adjust the spacing between product cards as needed */
+    border: 1px solid #ddd; /* Add a border to separate the cards visually */
+    border-radius: 10px; /* Add rounded corners to the cards */
+    transition: transform 0.2s;
+    min-width: 200px /* Add a hover effect */
+  }
+  
+  .product-card:hover {
+    transform: scale(1.05); /* Scale up the card on hover for a visual effect */
+  }
+  

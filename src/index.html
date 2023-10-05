@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -10,31 +10,57 @@
     body {
       margin: 0;
       padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa; /* Background color */
+      color: #ffffff; /* Text color */
     }
+
     .footer {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      background-color: #19191a;
+      background-color: #343a40; /* Footer background color */
+      color: #fff; /* Footer text color */
       text-align: center;
-    }
-    .footer-inner {
-      background-color: rgba(0, 0, 0, 0.2);
-      color: white;
       padding: 10px;
+    }
+
+    /* Navbar styles */
+    .navbar {
+      color: #fff; /* Navbar text color */
+      padding: 10px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .navbar ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .navbar li {
+      margin: 0 15px;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #078dc2;
     }
   </style>
 </head>
 <body>
-  <pm-root></pm-root>
+  <header class="navbar">
+    <app-navbar></app-navbar>
+  </header>
 
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer-inner">
-  © 2023 Copyright: <span>Tech & Mech</span>
   
-</div>
-</footer>
+    <!-- Content of your page goes here -->
+    <pm-root></pm-root>
+  
+
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2023 Tech & Mech
+  </footer>
 </body>
 </html>
+
