@@ -19,6 +19,8 @@ import { ViewCartComponent } from './viewcart/viewcart.component';
 import { ViewCategoryComponent } from './view-category/view-category.component';
 import { CartService } from './products/CartService';
 import { AdminComponent } from './admin/admin.component';
+import { SharedModule } from './shared/shared.module';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { AdminComponent } from './admin/admin.component';
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
     ]),
     ProductModule, 
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   providers: [AuthService, CartService],
   bootstrap: [AppComponent]

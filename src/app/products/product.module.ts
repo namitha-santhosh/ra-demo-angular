@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { ProductListComponent } from './product-list.component';
 import { ProductDetailComponent } from './product-detail.component';
@@ -31,7 +31,8 @@ import { ViewCategoryComponent } from '../view-category/view-category.component'
       { path: 'category', canActivate:[AuthGuard], component: CategoryComponent },
       { path: 'view category', canActivate:[AuthGuard], component: ViewCategoryComponent},
       { path: 'categories/add', canActivate:[AdminGuard], component: CategoryAddComponent },
-    ])
+    ]),
+    NgxPaginationModule
   ],
   declarations: [
     ProductListComponent,

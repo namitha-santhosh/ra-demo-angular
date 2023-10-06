@@ -60,26 +60,14 @@ export class ProductDetailComponent implements OnInit {
     return this.authService.isAdmin();
   }
 
-  /* addToCart(productId: number): void {
-    if (productId !== null) { 
-      this.cartService.addToCart(productId).subscribe(
-        (response: any) => {
-          console.log('Product added to cart:', response);
-          alert("Product added to cart");
-          this.router.navigate(['/products']);
-        },
-        (error: any) => {
-          console.error('Error adding product to cart:', error);
-        }
-      );
-    }
-  } */
 
   addToCart(productId: number, quantity: number): void {
     if (productId !== null) {
       this.cartService.addToCart(productId, quantity).subscribe(
         (response: any) => {
+          console.log('sent quantity:', this.quantity)
           console.log('Product added to cart:', response);
+          this.quantity = response.updatedQuantity;
           console.log('Quantity:', this.quantity);
           alert('Product added to cart');
           this.router.navigate(['/products']);

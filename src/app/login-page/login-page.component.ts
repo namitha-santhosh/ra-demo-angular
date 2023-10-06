@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login-page',
@@ -38,15 +39,21 @@ export class LoginPageComponent implements OnInit {
         (response) => {
           const jwtToken = response.token; 
 
+          const jwtHelper = new JwtHelperService();
+          const tokenPayload = jwtHelper.decodeToken(jwtToken);
+
           this.authService.setToken(jwtToken);
           alert(`Login Successful, Welcome`);
           this.authService.login();
-
+/* 
           if (credentials.email === 'admin@gmail.com' && credentials.password === 'admin123') {
             this.authService.setAdminStatus(true);
           } else {
             this.authService.setAdminStatus(false);
-          }
+          } */
+
+          const isAdmin = tokenPayload.roles.includes('ROLE_ADMIN');
+          this.authService.setAdminStatus(isAdmin);
           
           this.loginForm.reset();
           this.router.navigate(['products']);

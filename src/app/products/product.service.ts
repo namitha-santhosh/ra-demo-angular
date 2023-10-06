@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
@@ -12,17 +12,23 @@ import { AuthService } from '../auth.service';
   providedIn: 'root'
 })
 export class ProductService {
-  private productsUrl = 'http://127.0.0.1:8000/api/products'; // JSON Server endpoint
+  private productsUrl = 'http://127.0.0.1:8000/api/products'; 
   private editUrl = 'http://127.0.0.1:8000/api/products/imgedit'
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  getProducts(): Observable<Product[]> {
+  getProducts(page: number, pageSize: number): Observable<Product[]> {
 
     const token = this.authService.getToken();
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<Product[]>(this.productsUrl, { headers })
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+
+    const urlWithParams = `${this.productsUrl}?${params.toString()}`;
+      
+    return this.http.get<Product[]>(urlWithParams, { headers })
       .pipe(
         tap(data => console.log(JSON.stringify(data))),
         catchError(this.handleError)

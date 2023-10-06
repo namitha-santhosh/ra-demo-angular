@@ -42,6 +42,7 @@ export class ProductListComponent implements OnInit {
       reader.readAsDataURL(response);
     });
   }
+  
 
   performFilter(filterBy: string): Product[] {
     filterBy = filterBy.toLocaleLowerCase();
@@ -60,14 +61,34 @@ export class ProductListComponent implements OnInit {
     this.showImage = !this.showImage;
   }
 
+
+  currentPage = 1;
+  pageSize = 10;
+  totalItems = 0;
+
+
   ngOnInit(): void {
-    this.productService.getProducts().subscribe({
-      next: products => {
-        this.products = products;
-        this.filteredProducts = this.products;
-      },
-      error: err => this.errorMessage = err
-    });
+    this.loadPage(this.currentPage);
+  }
+
+  loadPage(page: number): void {
+    this.productService.getProducts(page, this.pageSize)
+      .subscribe({
+        next: (response: any) => {
+          this.products = response.data;
+          this.totalItems = response.totalItems;
+          this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
+          console.log(this.totalItems);
+
+        },
+        error: err => this.errorMessage = err
+      });
+  }
+
+  pageChanged(page: number): void {
+    this.currentPage = page;
+    console.log(this.currentPage);
+    this.loadPage(this.currentPage);
   }
 
   isAdminUser(): boolean {

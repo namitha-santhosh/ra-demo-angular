@@ -35,9 +35,6 @@ import { Router } from '@angular/router';
       <li class="nav-item" *ngIf="authService.isAdmin()">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/products/0/edit']">Add Product</a>
       </li>
-      <li class="nav-item" *ngIf="authService.isAuthenticatedUser() && !authService.isAdmin()">
-        <a class="nav-link" routerLinkActive="active" [routerLink]="['/category']">Categories</a>
-      </li>
       <li class="nav-item" *ngIf="authService.isAdmin()">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/view category']">Edit Category</a>
       </li>

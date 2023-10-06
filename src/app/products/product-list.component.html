@@ -3,13 +3,17 @@
     {{pageTitle}}
   </div>
 
-
   <div class="card-body">
     <div class="row">
       <div class="col-md-2">Filter by:</div>
       <div class="col-md-4">
         <input type="text"
                [(ngModel)]="listFilter" />
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary" [routerLink]="['/category']">
+          View by Category
+        </button>
       </div>
     </div>
     <div class="row"
@@ -39,7 +43,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let product of filteredProducts">
+          <!-- Add the paginate pipe here -->
+          <tr *ngFor="let product of filteredProducts | paginate: { itemsPerPage: pageSize, currentPage: currentPage, totalItems: totalItems}">
             <td>
               <img *ngIf="showImage && product.imageUrl"
                    [src]="product.imageUrl"
@@ -70,12 +75,17 @@
           </tr>
         </tbody>
       </table>
+
+      <pagination-controls  (pageChange)="pageChanged($event)" previousLabel="Previous" nextLabel="Next"></pagination-controls>
+
     </div>
 
   </div>
+
 </div>
 
 <div *ngIf="errorMessage"
      class="alert alert-danger">
   Error: {{ errorMessage }}
 </div>
+

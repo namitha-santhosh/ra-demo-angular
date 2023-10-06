@@ -12,6 +12,9 @@ export class CategoryComponent implements OnInit {
   selectedCategoryId: number | null = null;
   selectedCategoryName: string = ''; 
   products: any[] = []; 
+  showImage = true;
+  imageWidth = 50;
+  imageMargin = 2;
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -41,5 +44,16 @@ export class CategoryComponent implements OnInit {
       this.products = [];
       this.selectedCategoryName = '';
     }
+  }
+
+  fetchImage(imageUrl: string): void {
+    this.http.get(imageUrl, { responseType: 'blob' }).subscribe(response => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const imageElement = document.getElementById('productImage') as HTMLImageElement;
+        imageElement.src = reader.result as string;
+      };
+      reader.readAsDataURL(response);
+    });
   }
 }
