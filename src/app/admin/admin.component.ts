@@ -16,24 +16,17 @@ export class AdminComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private sanitizer: DomSanitizer,
-    private http: HttpClient 
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    const token = this.authService.getToken();
-    const adminUrl = 'http://127.0.0.1:8000/admin'; 
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    this.http.get(adminUrl, { headers }).subscribe(
-      (response: any) => {
-      },
-      (error) => {
-        console.error('Error fetching admin data', error);
-        if (error.status === 401) {
-          this.router.navigate(['/login']);
-        }
-      }
-    );
+    this.redirectToAdminPage();
   }
+  redirectToAdminPage() {
+    const url = 'http://127.0.0.1:8000/admin';
+
+    // Open the URL in a new tab
+    window.open(url, '_blank');
+     }    
 }
+

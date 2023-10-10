@@ -78,8 +78,6 @@ export class ProductListComponent implements OnInit {
           this.products = response.data;
           this.totalItems = response.totalItems;
           this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
-          console.log(this.totalItems);
-
         },
         error: err => this.errorMessage = err
       });
@@ -87,7 +85,6 @@ export class ProductListComponent implements OnInit {
 
   pageChanged(page: number): void {
     this.currentPage = page;
-    console.log(this.currentPage);
     this.loadPage(this.currentPage);
   }
 

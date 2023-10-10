@@ -43,4 +43,12 @@ export class CartService {
      return this.http.post<any>(`http://127.0.0.1:8000/api/cart/remove-product/${productId}`, {}, { headers });
   }
   
+  private baseUrl = 'http://127.0.0.1:8000/api/cart/total-price'
+  
+  getCartTotalPrice(): Observable<{ total_price: number }> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<{ total_price: number }>(`${this.baseUrl}`, {headers});
+  }
 }

@@ -43,7 +43,6 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Add the paginate pipe here -->
           <tr *ngFor="let product of filteredProducts | paginate: { itemsPerPage: pageSize, currentPage: currentPage, totalItems: totalItems}">
             <td>
               <img *ngIf="showImage && product.imageUrl"

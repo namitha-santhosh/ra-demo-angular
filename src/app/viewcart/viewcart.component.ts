@@ -22,11 +22,13 @@ export class ViewCartComponent implements OnInit {
   username: string | undefined;
   //products: Product[] = [];
   cartItems: CartItem[] = [];
+  totalCartPrice: number = 0;
 
   constructor(private http: HttpClient, private authService:AuthService, private router: Router, private cartService: CartService) {}
 
   ngOnInit(): void {
     this.fetchCartData();
+    this.fetchTotalCartPrice();
   }
 
 
@@ -38,6 +40,11 @@ export class ViewCartComponent implements OnInit {
     });
   }
 
+  fetchTotalCartPrice() {
+    this.cartService.getCartTotalPrice().subscribe((data: { total_price: number }) => {
+      this.totalCartPrice = data.total_price;
+    });
+  }
 
   removeProduct(productId: number) {
   
@@ -45,6 +52,7 @@ export class ViewCartComponent implements OnInit {
       () => {
         alert('Product removed from cart.');
         this.fetchCartData();
+        this.fetchTotalCartPrice();
       },
       (error) => {
         console.error('Error removing product:', error);
@@ -67,9 +75,14 @@ export class ViewCartComponent implements OnInit {
     });
   }
 
+  proceedToCheckout():void{
+    this.router.navigate(['/home']);
+  }
+
   onBack(): void {
     this.router.navigate(['/products']);
   }
+
   
 }
 
