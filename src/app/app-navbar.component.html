@@ -1,0 +1,44 @@
+<!-- Base container -->
+<div class="app-container">
+  <!-- Top navigation bar - only shown when authenticated -->
+  <div class="top-nav" *ngIf="authService.isAuthenticatedUser()">
+    <div class="top-nav-content">
+      <div class="nav-left">
+        <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+        <span class="logo">P10-RA DEMO</span>
+      </div>
+      <div class="nav-links">
+        <div class="profile-dropdown">
+          <button class="profile-icon">👤</button>
+          <div class="dropdown-content">
+            <a (click)="logout()">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content area -->
+  <div class="main-container" [class.authenticated]="authService.isAuthenticatedUser()">
+    <!-- Authenticated user view with sidebar -->
+    <ng-container *ngIf="authService.isAuthenticatedUser()">
+      <div class="sidebar" [class.collapsed]="sidebarCollapsed">
+        <div class="sidebar-content">
+          <a class="sidebar-link" routerLink="/welcome" routerLinkActive="active">Dashboard</a>
+          <a class="sidebar-link" routerLink="/releases" routerLinkActive="active">Releases</a>
+          <a class="sidebar-link" *ngIf="authService.isAdmin()" routerLink="/admin" routerLinkActive="active">Admin Portal</a>
+        </div>
+      </div>
+      <div class="content" [class.collapsed]="sidebarCollapsed">
+        <router-outlet></router-outlet>
+      </div>
+    </ng-container>
+
+    <!-- Non-authenticated user view -->
+    <ng-container *ngIf="!authService.isAuthenticatedUser()">
+      <div class="login-container">
+        <router-outlet></router-outlet>
+      </div>
+    </ng-container>
+  </div>
+</div>

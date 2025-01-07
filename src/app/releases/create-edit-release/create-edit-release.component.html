@@ -1,0 +1,51 @@
+<mat-dialog-content>
+  <div class="modal-header">
+    <h2 id="modal-title">{{ isEditMode ? 'Edit Release' : 'Create New Release' }}</h2>
+    <button mat-icon-button (click)="closeModal()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <form (ngSubmit)="onSubmit()" #releaseForm="ngForm">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="release.name" name="name" required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Status</mat-label>
+      <input matInput [(ngModel)]="release.status" name="status" required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Production Date</mat-label>
+      <input matInput [(ngModel)]="release.productionDate" name="productionDate" [matDatepicker]="prodPicker" required>
+      <mat-datepicker-toggle matSuffix [for]="prodPicker"></mat-datepicker-toggle>
+      <mat-datepicker #prodPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>QA Date</mat-label>
+      <input matInput [(ngModel)]="release.qaDate" name="qaDate" [matDatepicker]="qaPicker" required>
+      <mat-datepicker-toggle matSuffix [for]="qaPicker"></mat-datepicker-toggle>
+      <mat-datepicker #qaPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Stage Date</mat-label>
+      <input matInput [(ngModel)]="release.stageDate" name="stageDate" [matDatepicker]="stagePicker" required>
+      <mat-datepicker-toggle matSuffix [for]="stagePicker"></mat-datepicker-toggle>
+      <mat-datepicker #stagePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Main Release Ticket</mat-label>
+      <input matInput [(ngModel)]="release.mainReleaseTicket" name="mainReleaseTicket">
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button type="submit" color="primary">{{ isEditMode ? 'Save Changes' : 'Create Release' }}</button>
+      <button mat-raised-button type="button" color="warn" (click)="releaseForm.reset()">Reset</button>
+    </div>
+  </form>
+</mat-dialog-content>

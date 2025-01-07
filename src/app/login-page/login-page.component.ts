@@ -56,7 +56,7 @@ export class LoginPageComponent implements OnInit {
           this.authService.setAdminStatus(isAdmin);
           
           this.loginForm.reset();
-          this.router.navigate(['products']);
+          this.router.navigate(['welcome']);
         },
         (error) => {
           alert('User not found or invalid password');

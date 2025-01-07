@@ -1,44 +1,36 @@
-<div class="container vh-120">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-12 col-xl-11">
-        <div class="card text-black" style="border-radius: 25px;">
-          <div class="card-body p-md-5">
-            <div class="row justify-content-center">
-              <div class="col-md-5">
-                <img src="https://img.freepik.com/free-vector/global-data-security-personal-data-security-cyber-data-security-online-concept-illustration-internet-security-information-privacy-protection_1150-37336.jpg?size=626&ext=jpg&ga=GA1.2.214828280.1696361336&semt=sph" alt="Your Image" class="img-fluid">
-              </div>
-              <div class="col-md-5">
-                <div class="text-center">
-                  <h1 style="color: rgb(6, 89, 161);" class="fw-bold mb-5">Login</h1>
-                </div>
-                <form [formGroup]="loginForm" (ngSubmit)="login()" class="mx-1 mx-md-4">
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fa fa-envelope fa-lg me-3 fa-fw" style="color: rgb(7, 138, 199);"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="email" formControlName="email" class="form-control" />
-                      <label style="color: rgb(6, 89, 161);" class="form-label" for="email">Email</label>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fa fa-lock fa-lg me-3 fa-fw" style="color: rgb(7, 138, 199);"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="password" id="password" formControlName="password" class="form-control" />
-                      <label style="color: rgb(6, 89, 161);" class="form-label" for="password">Password</label>
-                    </div>
-                  </div>
-                  <div class="text-center">
-                    <span>Not a user? Create New Account </span>
-                    <a routerLink="/signUp">here</a>
-                    <br/>
-                    <button type="submit" class="btn btn-primary btn-lg mt-4">Login</button>
-                  </div>
-                </form>
-              </div>
-            </div>
+<div class="container vh-100">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-lg-6">
+      <div class="card bg-dark text-white" style="border-radius: 15px; border: 1px solid #333;">
+        <div class="card-body p-5">
+          <div class="text-center">
+            <h1 class="fw-bold mb-5">Login</h1>
           </div>
+          <form [formGroup]="loginForm" (ngSubmit)="login()" class="mx-1 mx-md-4">
+            <div class="mb-4">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="text"
+                id="email"
+                formControlName="email"
+                class="form-control bg-dark text-white border-white"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                id="password"
+                formControlName="password"
+                class="form-control bg-dark text-white border-white"
+              />
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-light btn-lg mt-4 w-100">Login</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
-  
-  
+</div>

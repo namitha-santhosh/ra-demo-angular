@@ -1,0 +1,14 @@
+<div class="release-detail-container">
+    <h1>Release Detail: {{ release?.name }}</h1>
+  
+    <div *ngIf="release">
+      <p><strong>Status:</strong> {{ release.status }}</p>
+      <p><strong>Production Date:</strong> {{ release.productionDate }}</p>
+      <p><strong>QA Date:</strong> {{ release.qaDate }}</p>
+      <p><strong>Stage Date:</strong> {{ release.stageDate }}</p>
+      <p><strong>Main Release Ticket:</strong> {{ release.mainReleaseTicket }}</p>
+    </div>
+  
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  </div>
+  

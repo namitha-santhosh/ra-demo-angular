@@ -7,19 +7,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppNavbarComponent } from './app-navbar.component';
 import { WelcomeComponent } from './home/welcome.component';
-import { ProductModule } from './products/product.module';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
 import { AuthService } from './auth.service';
-import { CategoryComponent } from './category/category.component';
-import { CategoryAddComponent } from './category-add/category-add.component';
-import { EditCartComponent } from './edit-cart/edit-cart.component';
 import { AuthGuard } from './route.guard';
-import { ViewCartComponent } from './viewcart/viewcart.component';
-import { ViewCategoryComponent } from './view-category/view-category.component';
-import { CartService } from './products/CartService';
 import { AdminComponent } from './admin/admin.component';
 import { SharedModule } from './shared/shared.module';
+import { ReleaseListComponent } from './releases/release-list/release-list.component';
+import { ReleaseDetailComponent } from './releases/release-detail/release-detail.component';
+import { ReleaseModule } from './releases/release.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
 
 
 @NgModule({
@@ -28,7 +26,7 @@ import { SharedModule } from './shared/shared.module';
     WelcomeComponent,
     LoginPageComponent,
     SignupPageComponent, 
-    AppNavbarComponent, CategoryComponent, CategoryAddComponent, EditCartComponent, ViewCartComponent, ViewCategoryComponent, AdminComponent,
+    AppNavbarComponent, AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,17 +36,17 @@ import { SharedModule } from './shared/shared.module';
       { path: 'welcome', component: WelcomeComponent },
       { path: 'login', component:LoginPageComponent},
       { path: 'signUp', component:SignupPageComponent},
-      { path: 'cart', canActivate:[AuthGuard], component:ViewCartComponent},
-      { path: 'edit-cart', canActivate:[AuthGuard], component: EditCartComponent},
       { path: 'admin', canActivate:[AuthGuard], component: AdminComponent},
-      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-      { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: '**', redirectTo: 'login', pathMatch: 'full'}
     ]),
-    ProductModule, 
+    ReleaseModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
-  providers: [AuthService, CartService],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

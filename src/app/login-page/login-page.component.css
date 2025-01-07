@@ -1,0 +1,66 @@
+/* Container height */
+.container {
+    min-height: 100vh;
+  }
+  
+  /* Card styles */
+  .card {
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    border-radius: 15px;
+    border: 1px solid #333;
+  }
+  
+  /* Form inputs */
+  .form-control {
+    background-color: #111; /* Darker background for inputs */
+    color: #fff; /* White text for inputs */
+    border: 1px solid #555; /* Subtle border */
+    border-radius: 5px;
+  }
+  
+  .form-control:focus {
+    background-color: #000; /* Keep input background consistent */
+    color: #fff;
+    border-color: #fff; /* Highlight border when focused */
+    box-shadow: none;
+  }
+  
+  /* Form labels */
+  .form-label {
+    color: #ccc; /* Light gray for labels */
+    font-weight: bold;
+  }
+  
+  /* Button styles */
+  .btn-light {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .btn-light:hover {
+    background-color: #444; /* Gray background on hover */
+    color: #fff; /* White text on hover */
+  }
+  
+  /* Header */
+  h1 {
+    color: #fff; /* White header text */
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  /* Adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .card {
+      border-radius: 10px;
+    }
+  
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  

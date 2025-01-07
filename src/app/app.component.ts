@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  pageTitle = 'Tech & Mech';
+  pageTitle = 'P10-RA DEMO';
 }
  
 
