@@ -13,11 +13,11 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from './route.guard';
 import { AdminComponent } from './admin/admin.component';
 import { SharedModule } from './shared/shared.module';
-import { ReleaseListComponent } from './releases/release-list/release-list.component';
-import { ReleaseDetailComponent } from './releases/release-detail/release-detail.component';
 import { ReleaseModule } from './releases/release.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { ArtifactsComponent } from './artifact/artifacts/artifacts.component';
 
 
 @NgModule({
@@ -27,16 +27,19 @@ import { MaterialModule } from './material.module';
     LoginPageComponent,
     SignupPageComponent, 
     AppNavbarComponent, AdminComponent,
+    BreadcrumbComponent,
+    ArtifactsComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: 'welcome', component: WelcomeComponent },
+      { path: 'welcome', component: WelcomeComponent, data: { breadcrumb: 'Home' } },
       { path: 'login', component:LoginPageComponent},
       { path: 'signUp', component:SignupPageComponent},
       { path: 'admin', canActivate:[AuthGuard], component: AdminComponent},
+      { path: 'artifacts', component: ArtifactsComponent, canActivate:[AuthGuard]},
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login', pathMatch: 'full'}
     ]),

@@ -9,7 +9,9 @@
       </div>
       <div class="nav-links">
         <div class="profile-dropdown">
-          <button class="profile-icon">👤</button>
+          <button class="profile-icon">
+            <mat-icon>account_circle</mat-icon>
+          </button>
           <div class="dropdown-content">
             <a (click)="logout()">Logout</a>
           </div>
@@ -26,10 +28,12 @@
         <div class="sidebar-content">
           <a class="sidebar-link" routerLink="/welcome" routerLinkActive="active">Dashboard</a>
           <a class="sidebar-link" routerLink="/releases" routerLinkActive="active">Releases</a>
-          <a class="sidebar-link" *ngIf="authService.isAdmin()" routerLink="/admin" routerLinkActive="active">Admin Portal</a>
+          <a class="sidebar-link" routerLink="/artifacts" routerLinkActive="active">Artifacts</a>
+          <a class="sidebar-link" *ngIf="authService.hasRole('ROLE_ADMIN')" routerLink="/admin" routerLinkActive="active">Admin Portal</a>
         </div>
       </div>
       <div class="content" [class.collapsed]="sidebarCollapsed">
+        <!-- <app-breadcrumb></app-breadcrumb> --> 
         <router-outlet></router-outlet>
       </div>
     </ng-container>

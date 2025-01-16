@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReleaseService } from '../release.service';
 import { Release } from '../release';
 import { CreateEditReleaseComponent } from '../create-edit-release/create-edit-release.component';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-release-list',
@@ -16,11 +17,14 @@ export class ReleaseListComponent implements OnInit {
   errorMessage: string = '';
   selectedRelease: Release = { name: '', status: '', productionDate: new Date(), qaDate: new Date(), stageDate: new Date(), mainReleaseTicket: '' };
   isEditMode: boolean = false;
-  displayedColumns: string[] = ['name', 'status', 'productionDate', 'qaDate', 'stageDate', 'mainReleaseTicket', 'actions'];
+  displayedColumns: string[] = ['name', 'status', 'productionDate', 'qaDate', 'stageDate', 'mainReleaseTicket'];
 
-  constructor(private releaseService: ReleaseService) { }
+  constructor(private releaseService: ReleaseService, public authService: AuthService) { }
 
   ngOnInit(): void {
+    if (this.authService.hasRole('ROLE_RA')) {
+      this.displayedColumns.push('actions');
+    }
     this.getReleases();
   }
 
@@ -50,21 +54,17 @@ export class ReleaseListComponent implements OnInit {
 
   saveRelease(release: Release): void {
     if (this.isEditMode) {
-      // Logic to update the release
       this.releaseService.updateRelease(release).subscribe({
         next: () => {
-          console.log('Release updated');
-          this.getReleases(); // Refresh the list after saving
+          this.getReleases();
           this.closeModal();
         },
         error: (err) => this.errorMessage = err
       });
     } else {
-      // Logic to add the new release
       this.releaseService.createRelease(release).subscribe({
         next: () => {
-          console.log('New release created');
-          this.getReleases(); // Refresh the list after saving
+          this.getReleases();
           this.closeModal();
         },
         error: (err) => this.errorMessage = err
@@ -72,13 +72,17 @@ export class ReleaseListComponent implements OnInit {
     }
   }
 
-  deleteRelease(release: Release): void {
-    this.releaseService.deleteRelease(release.name).subscribe({
-      next: () => {
-        console.log('Release deleted');
-        this.getReleases(); // Refresh the list after deleting
-      },
-      error: (err) => this.errorMessage = err
-    });
+  deleteRelease(release:Release): void {
+    if (release && confirm('Are you sure you want to delete this release?')) {
+      this.releaseService.deleteRelease(release.name).subscribe({
+        next: () => {
+          this.getReleases();
+        },
+        error: (error) => {
+          this.errorMessage = 'Error deleting release';
+          console.error(error);
+        }
+      });
+    }
   }
 }

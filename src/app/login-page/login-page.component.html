@@ -1,35 +1,70 @@
-<div class="container vh-100">
+<div class="container vh-100 bg-gradient">
   <div class="row d-flex justify-content-center align-items-center h-100">
-    <div class="col-lg-6">
-      <div class="card bg-dark text-white" style="border-radius: 15px; border: 1px solid #333;">
+    <div class="col-lg-5">
+      <div class="card bg-dark text-white shadow-lg">
         <div class="card-body p-5">
-          <div class="text-center">
-            <h1 class="fw-bold mb-5">Login</h1>
+          <!-- Header Section -->
+          <div class="text-center mb-4">
+            <!-- Logo on top of the heading -->
+            <img src="assets/images/logo.jpg" alt="Logo" class="mb-3" style="max-width: 100px;">
+            <h1 class="display-5 fw-bold mb-2" style="color:rgb(54, 54, 54)">P10-RA Demo</h1>
+            <p class="text-gray">Welcome back! Please login to continue.</p>
           </div>
+
+          <!-- Form Section -->
           <form [formGroup]="loginForm" (ngSubmit)="login()" class="mx-1 mx-md-4">
             <div class="mb-4">
-              <label for="email" class="form-label">Email</label>
-              <input
-                type="text"
-                id="email"
-                formControlName="email"
-                class="form-control bg-dark text-white border-white"
-              />
+              <div class="input-group input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-user"></i>
+                </span>
+                <input
+                  type="text"
+                  id="email"
+                  formControlName="email"
+                  class="form-control"
+                  placeholder="Enter your email"
+                />
+              </div>
             </div>
             <div class="mb-4">
-              <label for="password" class="form-label">Password</label>
-              <input
-                type="password"
-                id="password"
-                formControlName="password"
-                class="form-control bg-dark text-white border-white"
-              />
+              <div class="input-group input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-lock"></i>
+                </span>
+                <input
+                  type="password"
+                  id="password"
+                  formControlName="password"
+                  class="form-control"
+                  placeholder="Enter your password"
+                />
+              </div>
             </div>
             <div class="text-center">
-              <button type="submit" class="btn btn-light btn-lg mt-4 w-100">Login</button>
+              <button 
+                type="submit" 
+                class="btn btn-light btn w-100 mt-4 position-relative"
+                [disabled]="!loginForm.valid || loading"
+              >
+                Sign In
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              </button>
             </div>
           </form>
+
+          <!-- Footer Links -->
+          <div class="text-center mt-4">
+            <a href="#" class="text-gray text-decoration-none small">Forgot your password?</a>
+          </div>
         </div>
+      </div>
+      
+      <!-- Footer Section -->
+      <div class="text-center mt-2 text-faint">
+        <!-- Logo near the copyright notice -->
+        <img src="assets/images/logo.jpg" alt="Logo" class="mb-1" style="max-width: 50px;">
+        &copy; 2025 People10 Technologies, Inc.
       </div>
     </div>
   </div>

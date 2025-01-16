@@ -1,66 +1,113 @@
-/* Container height */
-.container {
-    min-height: 100vh;
-  }
-  
-  /* Card styles */
+
+
+/* Card styles */
+.card {
+  border-radius: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 30px rgba(255, 254, 254, 0.5) !important;
+}
+
+/* Text colors */
+.text-gray {
+  color: #898a8b !important;
+}
+
+/* Form controls */
+.form-control, .input-group-text {
+  background-color: #faf5f5 !important;
+  border: 1px solid rgba(15, 15, 15, 0.1);
+  color: #272626 !important;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.input-group-text {
+  border-right: none;
+}
+
+.form-control {
+  border-left: none;
+}
+
+.form-control::placeholder {
+  color: #616568 !important;
+}
+
+.form-control:focus {
+  background-color: #dadada !important;
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: none;
+}
+
+/* Input group hover and focus states */
+.input-group:hover .form-control,
+.input-group:hover .input-group-text {
+  border-color: rgba(129, 128, 128, 0.2);
+}
+
+.input-group:focus-within .form-control,
+.input-group:focus-within .input-group-text {
+  border-color: rgba(102, 102, 102, 0.3);
+}
+
+/* Button styles */
+.btn-light {
+  background-color: #2b2a2a;
+  border: none;
+  color: #f5efef;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-light:hover:not(:disabled) {
+  background-color: #b0b3b6;
+  transform: translateY(-1px);
+}
+
+.btn-light:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-light:disabled {
+  opacity: 0.65;
+}
+
+/* Form label */
+.form-label {
+  color: #e5e7eb;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Links */
+a.text-gray:hover {
+  color: #535353 !important;
+  text-decoration: none;
+}
+
+/* Animation for spinner */
+.spinner-border {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   .card {
-    background-color: #000; /* Black background */
-    color: #fff; /* White text */
-    border-radius: 15px;
-    border: 1px solid #333;
+    border-radius: 0.75rem;
   }
   
-  /* Form inputs */
-  .form-control {
-    background-color: #111; /* Darker background for inputs */
-    color: #fff; /* White text for inputs */
-    border: 1px solid #555; /* Subtle border */
-    border-radius: 5px;
+  .card-body {
+    padding: 1.5rem !important;
   }
-  
-  .form-control:focus {
-    background-color: #000; /* Keep input background consistent */
-    color: #fff;
-    border-color: #fff; /* Highlight border when focused */
-    box-shadow: none;
-  }
-  
-  /* Form labels */
-  .form-label {
-    color: #ccc; /* Light gray for labels */
-    font-weight: bold;
-  }
-  
-  /* Button styles */
-  .btn-light {
-    background-color: #fff;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .btn-light:hover {
-    background-color: #444; /* Gray background on hover */
-    color: #fff; /* White text on hover */
-  }
-  
-  /* Header */
-  h1 {
-    color: #fff; /* White header text */
-    font-size: 2.5rem;
-    font-weight: bold;
-  }
-  
-  /* Adjustments for smaller screens */
-  @media (max-width: 768px) {
-    .card {
-      border-radius: 10px;
-    }
-  
-    h1 {
-      font-size: 2rem;
-    }
-  }
-  
+}
+
+/* Faint text style */
+.text-faint {
+  font-size: 0.75rem; /* Small text size */
+}

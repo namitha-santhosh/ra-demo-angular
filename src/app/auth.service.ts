@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
   private isAuthenticated = false;
@@ -9,6 +9,8 @@ export class AuthService {
 
   private token: string | null = null;
   private isAdminUser = false;
+  private isAdmin = false;
+  private isRA = false;
 
   setToken(token: string): void {
     this.token = token;
@@ -27,16 +29,26 @@ export class AuthService {
     this.token = null;
     this.isAdminUser = false;
   }
-  
+
   isAuthenticatedUser(): boolean {
     return this.authState.isAuthenticated;
   }
 
   setAdminStatus(isAdmin: boolean) {
-    this.isAdminUser = isAdmin;
+    this.isAdmin = isAdmin;
   }
 
-  isAdmin(): boolean {
-    return this.isAdminUser;
+  setRAStatus(isRA: boolean) {
+    this.isRA = isRA;
+  }
+
+  hasRole(role: string): boolean {
+    if (role === 'ROLE_ADMIN') {
+      return this.isAdmin;
+    }
+    if (role === 'ROLE_RA') {
+      return this.isRA;
+    }
+    return false;
   }
 }

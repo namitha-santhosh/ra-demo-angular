@@ -38,7 +38,7 @@ export class ReleaseService {
   getReleaseByName(name: string): Observable<Release> {
     const token = this.authService.getToken();
     if (name === '') {
-      return of(this.initializeProduct());
+      return of(this.initializeRelease());
     }
     const url = `${this.releaseUrl}/${name}`;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -85,6 +85,54 @@ export class ReleaseService {
       );
   }
 
+  getReleaseArtifacts(releaseName: string): Observable<any[]> {
+    const token = this.authService.getToken();
+    const url = `${this.releasesUrl}/${releaseName}/artifacts`;
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    
+    return this.http.get<any[]>(url, { headers })
+      .pipe(
+        tap(data => console.log('getReleaseArtifacts: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+
+  getReleaseDeployments(releaseName: string): Observable<any[]> {
+    const token = this.authService.getToken();
+    const url = `${this.releasesUrl}/${releaseName}/deployments`;
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    
+    return this.http.get<any[]>(url, { headers })
+      .pipe(
+        tap(data => console.log('getReleaseDeployments: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+
+  deleteArtifactFromRelease(releaseName: string, artifactName: string): Observable<{}> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
+    const url = `${this.releasesUrl}/${releaseName}/artifacts/${artifactName}`;
+    
+    return this.http.delete(url, { headers })
+      .pipe(
+        tap(() => console.log('deleteArtifactFromRelease: ' + artifactName)),
+        catchError(this.handleError)
+      );
+  }
+  
+  patchArtifact(releaseName: string, artifactName: string, updateData: any): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
+    const url = `${this.releasesUrl}/${releaseName}/artifacts/${artifactName}`;
+    
+    return this.http.patch<any>(url, updateData, { headers })
+      .pipe(
+        tap((data) => console.log('patchArtifact: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }  
+
   private handleError(err: HttpErrorResponse): Observable<never> {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {
@@ -96,7 +144,7 @@ export class ReleaseService {
     return throwError(() => errorMessage);
   }
 
-   private initializeProduct(): Release {
+   private initializeRelease(): Release {
     // Return an initialized object
     return {
         name: '',

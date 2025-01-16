@@ -1,14 +1,54 @@
 <div class="release-detail-container">
-    <h1>Release Detail: {{ release?.name }}</h1>
-  
-    <div *ngIf="release">
+  <div class="header">
+    <h1>{{ release.name }}</h1>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openEditModal()">
+        <mat-icon>edit</mat-icon>
+        <span>Edit Release</span>
+      </button>
+      <button mat-menu-item (click)="deleteRelease()">
+        <mat-icon>delete</mat-icon>
+        <span>Delete Release</span>
+      </button>
+    </mat-menu>
+  </div>
+
+  <div *ngIf="release">
+    <div class="release-info">
       <p><strong>Status:</strong> {{ release.status }}</p>
       <p><strong>Production Date:</strong> {{ release.productionDate }}</p>
-      <p><strong>QA Date:</strong> {{ release.qaDate }}</p>
-      <p><strong>Stage Date:</strong> {{ release.stageDate }}</p>
       <p><strong>Main Release Ticket:</strong> {{ release.mainReleaseTicket }}</p>
     </div>
-  
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+    <mat-tab-group>
+      <mat-tab label="Artifacts">
+        <div class="tab-content">
+          <app-artifact-list [releaseName]="release.name"></app-artifact-list>
+        </div>
+      </mat-tab>
+      <mat-tab *ngIf="authService.hasRole('ROLE_RA')" label="Deployments">
+        <div class="tab-content">
+          <app-deployment-list [releaseName]="release.name"></app-deployment-list>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
-  
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <!-- Add the modal component -->
+  <div *ngIf="isModalOpen" class="modal-container">
+    <div class="modal-content">
+      <pm-create-edit-release
+        [release]="release"
+        [isEditMode]="true"
+        [isOpen]="isModalOpen"
+        (close)="closeModal()"
+        (save)="saveRelease($event)">
+      </pm-create-edit-release>
+    </div>
+  </div>
+</div>

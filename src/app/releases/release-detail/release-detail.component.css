@@ -1,0 +1,98 @@
+.release-detail-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .release-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .release-info p {
+    font-size: 16px;
+    margin: 8px 0;
+    color: #555;
+  }
+
+  .tab-content {
+    padding: 20px 0;
+  }
+  
+  .error {
+    color: #f44336;
+    margin-top: 16px;
+  }
+  
+  /* Optional: Style the tabs to match your app's theme */
+  ::ng-deep .mat-tab-group {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  ::ng-deep .mat-tab-label {
+    font-weight: 500;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: 30px;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .menu-button {
+    margin-left: 16px;
+  }
+
+  .modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 4px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .menu-button {
+    margin-left: 16px;
+  }
+  
+  .error {
+    color: #f44336;
+    margin-top: 16px;
+  }

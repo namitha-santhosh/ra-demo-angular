@@ -19,21 +19,36 @@
 
     <mat-form-field>
       <mat-label>Production Date</mat-label>
-      <input matInput [(ngModel)]="release.productionDate" name="productionDate" [matDatepicker]="prodPicker" required>
+      <input matInput
+             [(ngModel)]="dateModel.productionDate"
+             name="productionDate"
+             [matDatepicker]="prodPicker"
+             (dateChange)="onDateChange($event, 'productionDate')"
+             required>
       <mat-datepicker-toggle matSuffix [for]="prodPicker"></mat-datepicker-toggle>
       <mat-datepicker #prodPicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>QA Date</mat-label>
-      <input matInput [(ngModel)]="release.qaDate" name="qaDate" [matDatepicker]="qaPicker" required>
+      <input matInput
+             [(ngModel)]="dateModel.qaDate"
+             name="qaDate"
+             [matDatepicker]="qaPicker"
+             (dateChange)="onDateChange($event, 'qaDate')"
+             required>
       <mat-datepicker-toggle matSuffix [for]="qaPicker"></mat-datepicker-toggle>
       <mat-datepicker #qaPicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Stage Date</mat-label>
-      <input matInput [(ngModel)]="release.stageDate" name="stageDate" [matDatepicker]="stagePicker" required>
+      <input matInput
+             [(ngModel)]="dateModel.stageDate"
+             name="stageDate"
+             [matDatepicker]="stagePicker"
+             (dateChange)="onDateChange($event, 'stageDate')"
+             required>
       <mat-datepicker-toggle matSuffix [for]="stagePicker"></mat-datepicker-toggle>
       <mat-datepicker #stagePicker></mat-datepicker>
     </mat-form-field>
@@ -45,7 +60,7 @@
 
     <div class="form-actions">
       <button mat-raised-button type="submit" color="primary">{{ isEditMode ? 'Save Changes' : 'Create Release' }}</button>
-      <button mat-raised-button type="button" color="warn" (click)="releaseForm.reset()">Reset</button>
+      <button mat-raised-button type="button" color="black" (click)="releaseForm.reset()">Reset</button>
     </div>
   </form>
 </mat-dialog-content>

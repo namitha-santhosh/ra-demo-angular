@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AppNavbarComponent {
   pageTitle = 'P10-RA DEMO';
   isAuthenticated = false;
-  sidebarCollapsed = true; // Initialize the sidebar as collapsed
+  sidebarCollapsed = false;
 
   constructor(public authService: AuthService, private router: Router) {}
 
@@ -20,7 +20,6 @@ export class AppNavbarComponent {
 
   toggleSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
-    console.log('Sidebar toggled:', this.sidebarCollapsed); // Debugging output
   }
 
   logout() {

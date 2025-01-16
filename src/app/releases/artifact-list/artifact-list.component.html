@@ -1,0 +1,155 @@
+<div *ngIf="acceptedArtifacts.length > 0; else noAcceptedArtifacts">
+  <mat-card class="artifact-card">
+    <mat-card-title>Accepted Artifacts</mat-card-title>
+    <table mat-table [dataSource]="acceptedArtifacts" class="mat-elevation-z8">
+      <!-- Columns definition here -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let artifact"> {{ artifact.artifactName }} </td>
+      </ng-container>
+
+    <ng-container matColumnDef="version">
+      <th mat-header-cell *matHeaderCellDef> Version </th>
+      <td mat-cell *matCellDef="let artifact"> {{ artifact.version }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="buildNum">
+      <th mat-header-cell *matHeaderCellDef> Build Number </th>
+      <td mat-cell *matCellDef="let artifact"> {{ artifact.buildNum }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="referenceNumber">
+      <th mat-header-cell *matHeaderCellDef> Reference Number </th>
+      <td mat-cell *matCellDef="let artifact"> {{ artifact.referenceNumber }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="buildDateTime">
+      <th mat-header-cell *matHeaderCellDef> Build DateTime </th>
+      <td mat-cell *matCellDef="let artifact"> {{ artifact.buildDateTime }} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let artifact">
+          <button mat-icon-button (click)="onDelete(artifact)" matTooltip="Remove Artifact">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>
+
+<ng-template #noAcceptedArtifacts>
+  <mat-card class="artifact-card">
+    <mat-card-title>Accepted Artifacts</mat-card-title>
+    <p>No accepted artifacts available.</p>
+  </mat-card>
+</ng-template>
+
+<div *ngIf="pendingArtifacts.length > 0; else noPendingArtifacts">
+  <mat-card class="artifact-card">
+    <mat-card-title>Pending Artifacts</mat-card-title>
+    <table mat-table [dataSource]="pendingArtifacts" class="mat-elevation-z8">
+      <!-- Columns definition here -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let artifact"> {{ artifact.artifactName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="version">
+        <th mat-header-cell *matHeaderCellDef> Version </th>
+        <td mat-cell *matCellDef="let artifact"> {{ artifact.version }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="buildNum">
+        <th mat-header-cell *matHeaderCellDef> Build Number </th>
+        <td mat-cell *matCellDef="let artifact"> {{ artifact.buildNum }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="referenceNumber">
+        <th mat-header-cell *matHeaderCellDef> Reference Number </th>
+        <td mat-cell *matCellDef="let artifact"> {{ artifact.referenceNumber }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="buildDateTime">
+        <th mat-header-cell *matHeaderCellDef> Build DateTime </th>
+        <td mat-cell *matCellDef="let artifact"> {{ artifact.buildDateTime }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let artifact">
+          <button mat-icon-button (click)="onAdd(artifact)" matTooltip="Accept Artifact">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button (click)="onDelete(artifact)" matTooltip="Remove Artifact">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>
+
+<ng-template #noPendingArtifacts>
+  <mat-card class="artifact-card">
+    <mat-card-title>Pending Artifacts</mat-card-title>
+    <p>No pending artifacts available.</p>
+  </mat-card>
+</ng-template>
+
+<div *ngIf="removedArtifacts.length > 0; else noRemovedArtifacts">
+  <mat-card class="artifact-card">
+    <mat-card-title>Removed Artifacts</mat-card-title>
+    <table mat-table [dataSource]="removedArtifacts" class="mat-elevation-z8">
+      <!-- Columns definition here -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let artifact"> {{ artifact.artifactName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="version">
+        <th mat-header-cell *matHeaderCellDef> Version </th>
+        <td mat-cell *matCellDef="let artifact"> {{ artifact.version }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="buildNum">
+        <th mat-header-cell *matHeaderCellDef> Build Number </th>
+        <td mat-cell *matCellDef="let artifact"> {{ artifact.buildNum }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="referenceNumber">
+        <th mat-header-cell *matHeaderCellDef> Reference Number </th>
+        <td mat-cell *matCellDef="let artifact"> {{ artifact.referenceNumber }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="buildDateTime">
+        <th mat-header-cell *matHeaderCellDef> Build DateTime </th>
+        <td mat-cell *matCellDef="let artifact"> {{ artifact.buildDateTime }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let artifact">
+          <button mat-icon-button (click)="onAdd(artifact)" matTooltip="Add Artifact">
+            <mat-icon>add</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>
+
+<ng-template #noRemovedArtifacts>
+  <mat-card class="artifact-card">
+    <mat-card-title>Removed Artifacts</mat-card-title>
+    <p>No removed artifacts available.</p>
+  </mat-card>
+</ng-template>

@@ -12,6 +12,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class LoginPageComponent implements OnInit {
   public loginForm: FormGroup;
+  public loading = false;  // Spinner loading state
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,43 +29,43 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {}
 
   login() {
+    this.loading = true;
+
     const credentials = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     };
-
+  
     this.http
       .post<any>('http://localhost:8000/api/login', credentials)
       .subscribe(
         (response) => {
           const jwtToken = response.token; 
-
+  
           const jwtHelper = new JwtHelperService();
           const tokenPayload = jwtHelper.decodeToken(jwtToken);
-
+  
           this.authService.setToken(jwtToken);
-          alert(`Login Successful, Welcome`);
           this.authService.login();
-/* 
-          if (credentials.email === 'admin@gmail.com' && credentials.password === 'admin123') {
-            this.authService.setAdminStatus(true);
-          } else {
-            this.authService.setAdminStatus(false);
-          } */
-
+  
           const isAdmin = tokenPayload.roles.includes('ROLE_ADMIN');
+          const isRA = tokenPayload.roles.includes('ROLE_RA');
+          
           this.authService.setAdminStatus(isAdmin);
+          this.authService.setRAStatus(isRA);
           
           this.loginForm.reset();
           this.router.navigate(['welcome']);
+          
+          this.loading = false;
         },
         (error) => {
           alert('User not found or invalid password');
+          
+          this.loading = false;
         }
       );
   }
 
-  logout() {
-  }
+  logout() {}
 }
-
