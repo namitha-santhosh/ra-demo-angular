@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app-navbar.component.css']
 })
 export class AppNavbarComponent {
-  pageTitle = 'P10-RA DEMO';
+  pageTitle = 'QuantumRelease';
   isAuthenticated = false;
   sidebarCollapsed = false;
 

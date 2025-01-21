@@ -6,15 +6,22 @@ import { Release } from '../release';
   selector: 'pm-create-edit-release',
   templateUrl: './create-edit-release.component.html',
   styleUrls: ['./create-edit-release.component.css'],
-  providers: [DatePipe] // Add DatePipe to providers
+  providers: [DatePipe]
 })
 export class CreateEditReleaseComponent implements OnInit {
-  // Add form model properties to handle date strings
   dateModel = {
     productionDate: '',
     qaDate: '',
     stageDate: ''
   };
+
+  statusOptions = [
+    'uninitialized',
+    'open',
+    'in_qa',
+    'released',
+    'cancelled'
+  ];
 
   @Input() release: Release = {
     name: '',

@@ -12,10 +12,17 @@
       <input matInput [(ngModel)]="release.name" name="name" required>
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Status</mat-label>
-      <input matInput [(ngModel)]="release.status" name="status" required>
-    </mat-form-field>
+<!-- Replace the existing status input with this -->
+<mat-form-field>
+  <mat-label>Status</mat-label>
+  <mat-select [(ngModel)]="release.status" name="status" required>
+    <mat-option value="uninitialized">Uninitialized</mat-option>
+    <mat-option value="open">Open</mat-option>
+    <mat-option value="in_qa">In QA</mat-option>
+    <mat-option value="released">Released</mat-option>
+    <mat-option value="cancelled">Cancelled</mat-option>
+  </mat-select>
+</mat-form-field>
 
     <mat-form-field>
       <mat-label>Production Date</mat-label>
