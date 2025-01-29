@@ -1,37 +1,46 @@
-.card {
-    border: none;
-    transition: all 0.3s ease;
-  }
-  
-  .input-group-text {
-    border-radius: 5px 0 0 5px;
-  }
-  
-  .form-control {
-    border-radius: 0 5px 5px 0;
-  }
-  
-  .form-floating > .form-control {
-    padding-left: 0.5rem;
-  }
-  
-  .input-group-text, .form-control {
-    border-color: #ddd;
-  }
-  
-  .form-control:focus {
-    border-color: #666;
-    box-shadow: none;
-  }
-  
-  .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Ensure icons are centered and consistent width */
-  .input-group-text i {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.bg-light-blue {
+  background-color: #dbe3e7;
+}
+
+.text-primary {
+  color: #1e3a8a !important;
+}
+
+.btn-primary {
+  background-color: #1e40af;
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #1e3a8a;
+  transform: translateY(-1px);
+}
+
+.input-group-text {
+  background-color: #ffffff;
+  border: none;
+  color: #1e3a8a;
+}
+
+.form-control {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #334155;
+  padding: 0.75rem 1rem;
+}
+
+.form-control::placeholder {
+  color: #94a3b8;
+}
+
+.form-control:focus {
+  background-color: #ffffff;
+  border-color: #1e3a8a;
+  box-shadow: none;
+}
+
+.spinner-border {
+  width: 1.25rem;
+  height: 1.25rem;
+}

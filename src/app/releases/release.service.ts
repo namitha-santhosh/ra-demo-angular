@@ -7,13 +7,14 @@ import { catchError, tap, map } from 'rxjs/operators';
 
 import { AuthService } from '../auth.service';
 import { Release } from './release';
+import { Deployment } from './deployment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReleaseService {
-  private releasesUrl = 'http://127.0.0.1:8000/api/releases'; 
-  private releaseUrl = 'http://127.0.0.1:8000/api/release';
+  private releasesUrl = '/api/releases'; 
+  private releaseUrl = '/api/release';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -97,16 +98,18 @@ export class ReleaseService {
       );
   }
 
-  getReleaseDeployments(releaseName: string): Observable<any[]> {
+  getReleaseDeployments(releaseName: string): Observable<{ releaseName: string, deployments: Deployment[] }> {
     const token = this.authService.getToken();
     const url = `${this.releasesUrl}/${releaseName}/deployments`;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    
-    return this.http.get<any[]>(url, { headers })
-      .pipe(
-        tap(data => console.log('getReleaseDeployments: ' + JSON.stringify(data))),
-        catchError(this.handleError)
-      );
+
+    return this.http.get<{ releaseName: string, deployments: Deployment[] }>(
+      `${this.releasesUrl}/${releaseName}/deployments`, { headers }
+    )
+    .pipe(
+      tap(data => console.log('getReleaseDeployments: ' + JSON.stringify(data))),
+      catchError(this.handleError)
+    );
   }
 
   deleteArtifactFromRelease(releaseName: string, artifactName: string): Observable<{}> {

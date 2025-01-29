@@ -7,41 +7,43 @@ import { catchError, tap, map } from 'rxjs/operators';
 
 import { AuthService } from '../auth.service';
 import { Release } from './release';
+import { Deployment } from './deployment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeploymentService {
-  private releasesUrl = 'http://127.0.0.1:8000/api/releases'; 
-  private deploymentsUrl = 'http://127.0.0.1:8000/api/deployments'; 
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  createDeployment(releaseName: string): Observable<Release> {
+  triggerDeployment(releaseName: string, params: any): Observable<any> {
+    return this.http.post('/api/deploy', {
+      ...params,
+      releaseName: releaseName
+    });
+  }
+
+  getDeployments(limit: number = 10): Observable<{ deployments: Deployment[] }> {
+    return this.http.get<{ deployments: Deployment[] }>(`/api/deployments?limit=${limit}`);
+  }
+
+  createDeployment(releaseName:string, params:any): Observable<any> {
     const token = this.authService.getToken();
-    const url = `${this.releasesUrl}/${releaseName}/artifacts`;
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
-    return this.http.post<Release>(url, { headers }).pipe(
-      tap((data: any) => {
-        console.log('createDeployment Response:', data);
-      }),
+    const url = `/api/deploy`;
+    const headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${token}`)
+    .set('Content-Type', 'application/json');
+    
+    return this.http.post<any>(url, {
+      ...params,
+      releaseName: releaseName
+    }, { headers })
+    .pipe(
+      tap(data => console.log('createDeployment: ' + JSON.stringify(data))),
       catchError(this.handleError)
     );
   }
 
-  deleteDeployment(slug: string): Observable<{}> {
-    const token = this.authService.getToken();
-
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
-    const url = `${this.deploymentsUrl}/${slug}`;
-    return this.http.delete<Release>(url, { headers })
-      .pipe(
-        tap(data => console.log('deleteDeployment: ' + name)),
-        catchError(this.handleError)
-      );
-  }
-    
   private handleError(err: HttpErrorResponse): Observable<never> {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {

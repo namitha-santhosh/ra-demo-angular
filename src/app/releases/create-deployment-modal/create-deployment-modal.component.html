@@ -7,10 +7,13 @@
   </div>
   
   <form (ngSubmit)="onSubmit()" #releaseForm="ngForm">
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Environment</mat-label>
-      <input matInput name="environment" required>
-    </mat-form-field>
+      <mat-select [(ngModel)]="environmentName" name="environment" required>
+        <mat-option value="p10-demo">P10-Demo</mat-option>
+        <mat-option value="p10-test">P10-Test</mat-option>
+      </mat-select>
+    </mat-form-field>    
 
     <!-- Artifacts Table -->
     <div *ngIf="artifacts.length > 0">

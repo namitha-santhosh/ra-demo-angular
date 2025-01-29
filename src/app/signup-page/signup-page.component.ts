@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class SignupPageComponent {
   public signUpForm!: FormGroup;
+  public loading = false;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {}
 
@@ -27,14 +28,16 @@ export class SignupPageComponent {
   }
 
   signUp() {
+    this.loading = true;
     if (this.signUpForm.valid) {
   
-       this.http.post<any>("http://127.0.0.1:8000/api/register", this.signUpForm.value).subscribe({
+       this.http.post<any>("/api/register", this.signUpForm.value).subscribe({
               next: (response) => {
                 const msg = response.message;
                 alert(`${msg}`);
                 this.signUpForm.reset();
                 this.router.navigate(["login"]);
+                this.loading = false;
               },
               error: (err) => {
                 if (err.status === 409) {
@@ -42,6 +45,7 @@ export class SignupPageComponent {
                 } else {
                   alert(`Something went wrong`);
                 }
+                this.loading = false;
               }
             });
     } else {

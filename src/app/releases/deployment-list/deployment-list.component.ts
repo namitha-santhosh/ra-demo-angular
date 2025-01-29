@@ -1,23 +1,32 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ReleaseService } from '../release.service';
-import { DeploymentService } from '../deployment.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Release } from '../release';
+import { Deployment } from '../deployment';
 
 @Component({
   selector: 'app-deployment-list',
   templateUrl: './deployment-list.component.html',
   styleUrls: ['./deployment-list.component.css']
 })
-export class DeploymentListComponent {
-  @Input() releaseName: string | undefined;
+export class DeploymentListComponent implements OnInit {
+  @Input() releaseName!: string;
   isModalOpen: boolean = false;
-  deployments: any[] = [];
+  deployments: Deployment[] = [];
   errorMessage: string | undefined;
-  displayedColumns: string[] = ['name', 'actions'];
+  displayedColumns: string[] = [
+    'buildNumber',
+    'jobName',
+    'environment',
+    'status',
+    'triggeredBy',
+    'createdAt',
+    'actions'
+  ];
+  isLoading: boolean = false;
 
-  constructor(private releaseService: ReleaseService, 
-    private deploymentService: DeploymentService,    
+  constructor(
+    private releaseService: ReleaseService, 
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -29,33 +38,45 @@ export class DeploymentListComponent {
   }
 
   fetchDeployments(releaseName: string): void {
-    this.releaseService.getReleaseDeployments(releaseName).subscribe(
-      (deployments) => {
-        this.deployments = deployments;
+    this.isLoading = true;
+    this.releaseService.getReleaseDeployments(releaseName).subscribe({
+      next: (response) => {
+        this.deployments = response.deployments;
+        this.isLoading = false;
       },
-      (error) => {
-        this.errorMessage = 'Error fetching artifacts';
+      error: (error) => {
+        this.errorMessage = 'Error fetching deployments';
+        this.isLoading = false;
         console.error(error);
       }
-    );
+    });
   }
 
-  deleteDeployment(slug:string): void {
-    if (slug && confirm('Are you sure you want to delete this deployment?')) {
-      this.deploymentService.deleteDeployment(slug).subscribe({
-        next: () => {
-          this.router.navigate(['/releases']);
-        },
-        error: (error) => {
-          this.errorMessage = 'Error deleting release';
-          console.error(error);
-        }
-      });
+  getEnvironment(deployment: Deployment): string {
+    return deployment.parameters?.deployEnv || 'N/A';
+  }
+
+  formatDate(date: string): string {
+    return new Date(date).toLocaleString();
+  }
+
+  getStatusColor(status: string): string {
+    switch (status.toUpperCase()) {
+      case 'SUCCESS':
+        return 'green';
+      case 'FAILED':
+        return 'red';
+      case 'PENDING':
+        return 'orange';
+      case 'STARTED':
+        return 'blue';
+      default:
+        return 'grey';
     }
   }
 
   openModal(): void {
-      this.isModalOpen = true;
+    this.isModalOpen = true;
   }
   
   closeModal(): void {
@@ -63,7 +84,11 @@ export class DeploymentListComponent {
   }
   
   saveDeployment(release: Release): void {
-    console.log('saving depl');
+    this.closeModal();
+    this.fetchDeployments(this.releaseName!);
   }
-  
+
+  viewDeploymentDetails(deployment: Deployment): void {
+    console.log('View deployment:', deployment);
+  }
 }

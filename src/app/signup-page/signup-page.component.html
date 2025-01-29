@@ -1,53 +1,97 @@
-<div class="container min-vh-100">
+<div class="container vh-100">
   <div class="row d-flex justify-content-center align-items-center h-100">
-    <div class="col-lg-8 col-xl-7">
-      <div class="card shadow-lg" style="border-radius: 15px; background-color: #fafafa;">
-        <div class="card-body p-4">
-          <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-10">
-              <h2 class="text-center fw-bold mb-4" style="color: #333333;">Sign up</h2>
-              <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
-                <div class="input-group mb-3">
-                  <span class="input-group-text bg-transparent border-end-0">
-                    <i class="fa fa-user" style="color: #444444; width: 20px;"></i>
-                  </span>
-                  <div class="form-floating">
-                    <input type="text" id="fullname" formControlName="fullname" class="form-control border-start-0" placeholder="Full Name" />
-                    <label for="fullname">Full Name</label>
-                  </div>
-                </div>
+    <div class="col-lg-8">
+      <div class="row bg-white rounded">
+        <!-- Left Section (Logo and Title) -->
+        <div class="col-md-6 d-flex flex-column justify-content-center align-items-center text-center p-5 bg-light-blue">
+          <img src="assets/images/quantumrelease.png" alt="Logo" class="mb-4" style="max-width: 300px;">
+        </div>
 
-                <div class="input-group mb-3">
-                  <span class="input-group-text bg-transparent border-end-0">
-                    <i class="fa fa-envelope" style="color: #444444; width: 20px;"></i>
-                  </span>
-                  <div class="form-floating">
-                    <input type="email" id="email" formControlName="email" class="form-control border-start-0" placeholder="Your Email" />
-                    <label for="email">Your Email</label>
-                  </div>
-                </div>
-
-                <div class="input-group mb-3">
-                  <span class="input-group-text bg-transparent border-end-0">
-                    <i class="fa fa-lock" style="color: #444444; width: 20px;"></i>
-                  </span>
-                  <div class="form-floating">
-                    <input type="password" id="password" formControlName="password" class="form-control border-start-0" placeholder="Password" />
-                    <label for="password">Password</label>
-                  </div>
-                </div>
-
-                <div class="text-center mb-3">
-                  <span class="text-muted">Already have an account? <a routerLink="/login" class="text-dark fw-bold text-decoration-none">Login here</a></span>
-                </div>
-
-                <div class="d-grid">
-                  <button type="submit" class="btn btn-dark py-2">Register</button>
-                </div>
-              </form>
+        <!-- Right Section (Signup Form) -->
+        <div class="col-md-6 p-5">
+          <h2 class="mb-4 text-primary text-center">Sign Up</h2>
+          <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+            <div class="mb-4">
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-user"></i>
+                </span>
+                <input
+                  type="text"
+                  id="fullname"
+                  formControlName="fullname"
+                  class="form-control"
+                  placeholder="Full Name"
+                />
+              </div>
             </div>
+            <div class="mb-4">
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-phone"></i>
+                </span>
+                <input
+                  type="text"
+                  id="contact"
+                  formControlName="contact"
+                  class="form-control"
+                  placeholder="Contact Number"
+                />
+              </div>
+            </div>
+            <div class="mb-4">
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-envelope"></i>
+                </span>
+                <input
+                  type="email"
+                  id="email"
+                  formControlName="email"
+                  class="form-control"
+                  placeholder="Your Email"
+                />
+              </div>
+            </div>
+            <div class="mb-4">
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-lock"></i>
+                </span>
+                <input
+                  type="password"
+                  id="password"
+                  formControlName="password"
+                  class="form-control"
+                  placeholder="Password"
+                />
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button
+                type="submit"
+                class="btn btn-primary w-100 mt-2"
+                [disabled]="!signUpForm.valid || loading"
+              >
+                Register
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center mt-4">
+            <p class="small text-muted mb-0">
+              Already have an account?
+              <a routerLink="/login" class="text-decoration-none text-primary">Login here</a>
+            </p>
           </div>
         </div>
+      </div>
+
+      <div class="text-center text-muted mt-2 text-faint">
+        <img src="assets/images/logo.jpg" alt="Logo" class="mb-1" style="max-width: 50px;">
+        &copy; 2025 People10 Technologies, Inc.
       </div>
     </div>
   </div>

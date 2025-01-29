@@ -29,7 +29,7 @@
           <app-artifact-list [releaseName]="release.name"></app-artifact-list>
         </div>
       </mat-tab>
-      <mat-tab *ngIf="authService.hasRole('ROLE_RA')" label="Deployments">
+      <mat-tab label="Deployments">
         <div class="tab-content">
           <app-deployment-list [releaseName]="release.name"></app-deployment-list>
         </div>

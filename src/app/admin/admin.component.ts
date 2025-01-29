@@ -23,7 +23,7 @@ export class AdminComponent implements OnInit {
     this.redirectToAdminPage();
   }
   redirectToAdminPage() {
-    const url = 'http://127.0.0.1:8000/admin';
+    const url = '/api/admin';
 
     // Open the URL in a new tab
     window.open(url, '_blank');

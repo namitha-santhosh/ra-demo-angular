@@ -12,7 +12,7 @@ import { Artifact } from './artifact';
   providedIn: 'root'
 })
 export class ArtifactService {
-  private artifactsUrl = 'http://127.0.0.1:8000/api/artifacts'; 
+  private artifactsUrl = '/api/artifacts'; 
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

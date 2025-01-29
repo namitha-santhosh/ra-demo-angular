@@ -1,6 +1,7 @@
-import { Component,Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { ReleaseService } from '../release.service';  // Ensure this service is properly imported
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { ReleaseService } from '../release.service';
 import { Observable } from 'rxjs';
+import { DeploymentService } from '../deployment.service';
 
 @Component({
   selector: 'pm-create-deployment-modal',
@@ -10,13 +11,14 @@ import { Observable } from 'rxjs';
 export class CreateDeploymentModalComponent implements OnInit {
   artifacts: any[] = [];
   selectedArtifact: any;
+  environmentName: string = ''; // New variable to hold environment name
   displayedColumns: string[] = ['select', 'artifactName', 'version', 'buildNum', 'buildDateTime'];
   @Input() isOpen: boolean = false;
-  @Input() releaseName: string | undefined;
+  @Input() releaseName!: string;
   @Output() close = new EventEmitter<void>();
-  @Output() save = new EventEmitter<any>();  // Emit selected artifact
+  @Output() save = new EventEmitter<any>();
 
-  constructor(private releaseService: ReleaseService) { }
+  constructor(private releaseService: ReleaseService, private deploymentService: DeploymentService) { }
 
   ngOnInit() {
     if (this.releaseName) {
@@ -29,16 +31,39 @@ export class CreateDeploymentModalComponent implements OnInit {
       .subscribe(data => {
         this.artifacts = data.filter(artifact => artifact.status === 'accepted');
       });
-  }  
+  }
 
   closeModal() {
     this.close.emit();
   }
 
   onSubmit() {
-    if (this.selectedArtifact) {
-      this.save.emit(this.selectedArtifact);
+    const selectedArtifacts = this.artifacts
+      .filter(artifact => artifact.selected)
+      .map(artifact => ({
+        name: artifact.artifactName,
+        version: artifact.version
+      }));
+
+    if (!this.environmentName || selectedArtifacts.length === 0) {
+      alert("Please select an environment and at least one artifact.");
+      return;
     }
-    this.closeModal();
+
+    const payload = {
+      deployEnv: this.environmentName,
+      appName: selectedArtifacts[0].name,
+      appVersion: selectedArtifacts[0].version
+    };
+
+    this.deploymentService.createDeployment(this.releaseName, payload).subscribe({
+      next: () => {
+        this.save.emit();
+        this.closeModal();
+      },
+      error: (error) => {
+        console.error("Error creating deployment:", error);
+      }
+    });
   }
 }

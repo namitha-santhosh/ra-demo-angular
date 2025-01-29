@@ -1,113 +1,61 @@
-
-
-/* Card styles */
-.card {
-  border-radius: 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.95) !important;
+/* Gradient background */
+.bg-gradient-blue {
+  background: linear-gradient(to right, #dbeafe, #bfdbfe);
 }
 
-.shadow-lg {
-  box-shadow: 0 10px 30px rgba(255, 254, 254, 0.5) !important;
+/* Left Section Styles */
+.bg-light-blue {
+  background-color: #dbe3e7;
 }
 
-/* Text colors */
-.text-gray {
-  color: #898a8b !important;
+.text-primary {
+  color: #1e3a8a !important;
 }
 
-/* Form controls */
-.form-control, .input-group-text {
-  background-color: #faf5f5 !important;
-  border: 1px solid rgba(15, 15, 15, 0.1);
-  color: #272626 !important;
-  padding: 0.75rem 1rem;
-  transition: all 0.2s ease-in-out;
-}
-
-.input-group-text {
-  border-right: none;
-}
-
-.form-control {
-  border-left: none;
-}
-
-.form-control::placeholder {
-  color: #616568 !important;
-}
-
-.form-control:focus {
-  background-color: #dadada !important;
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: none;
-}
-
-/* Input group hover and focus states */
-.input-group:hover .form-control,
-.input-group:hover .input-group-text {
-  border-color: rgba(129, 128, 128, 0.2);
-}
-
-.input-group:focus-within .form-control,
-.input-group:focus-within .input-group-text {
-  border-color: rgba(102, 102, 102, 0.3);
-}
-
-/* Button styles */
-.btn-light {
-  background-color: #2b2a2a;
+.btn-primary {
+  background-color: #1e40af;
   border: none;
-  color: #f5efef;
-  padding: 0.75rem 1.5rem;
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
+  color: white;
 }
 
-.btn-light:hover:not(:disabled) {
-  background-color: #b0b3b6;
+.btn-primary:hover {
+  background-color: #1e3a8a;
   transform: translateY(-1px);
 }
 
-.btn-light:active:not(:disabled) {
-  transform: translateY(0);
+.card {
+  border-radius: 1.5rem;
 }
 
-.btn-light:disabled {
-  opacity: 0.65;
+/* Form styles */
+.input-group-text {
+  background-color: #ffffff;
+  border: none;
+  color: #1e3a8a;
 }
 
-/* Form label */
-.form-label {
-  color: #e5e7eb;
-  margin-bottom: 0.5rem;
-  font-size: 0.875rem;
+.form-control {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #334155;
+  padding: 0.75rem 1rem;
 }
 
-/* Links */
-a.text-gray:hover {
-  color: #535353 !important;
-  text-decoration: none;
+.form-control::placeholder {
+  color: #94a3b8;
 }
 
-/* Animation for spinner */
+.form-control:focus {
+  background-color: #ffffff;
+  border-color: #1e3a8a;
+  box-shadow: none;
+}
+
+.text-muted {
+  color: #64748b !important;
+}
+
 .spinner-border {
   width: 1.25rem;
   height: 1.25rem;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .card {
-    border-radius: 0.75rem;
-  }
-  
-  .card-body {
-    padding: 1.5rem !important;
-  }
-}
-
-/* Faint text style */
-.text-faint {
-  font-size: 0.75rem; /* Small text size */
 }

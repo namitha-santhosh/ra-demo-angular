@@ -1,11 +1,13 @@
 <!-- Base container -->
 <div class="app-container">
   <!-- Top navigation bar - only shown when authenticated -->
-  <div class="top-nav" *ngIf="authService.isAuthenticatedUser()">
+  <div class="top-nav" [class.expanded]="!sidebarCollapsed" *ngIf="authService.isAuthenticatedUser()">
     <div class="top-nav-content">
       <div class="nav-left">
         <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
-        <span class="logo">QuantumRelease</span>
+        <img src="assets/images/logo_small.png" alt="Logo" class="mb-1" style="max-width: 30px;">
+        <span class="logo" *ngIf="sidebarCollapsed">
+          QuantumRelease</span>
       </div>
       <div class="nav-links">
         <div class="profile-dropdown">
@@ -25,6 +27,9 @@
     <!-- Authenticated user view with sidebar -->
     <ng-container *ngIf="authService.isAuthenticatedUser()">
       <div class="sidebar" [class.collapsed]="sidebarCollapsed">
+        <div class="sidebar-header">
+          <span class="logo">QuantumRelease</span>
+        </div>
         <div class="sidebar-content">
           <a class="sidebar-link" routerLink="/welcome" routerLinkActive="active">Dashboard</a>
           <a class="sidebar-link" routerLink="/releases" routerLinkActive="active">Releases</a>
@@ -33,7 +38,6 @@
         </div>
       </div>
       <div class="content" [class.collapsed]="sidebarCollapsed">
-        <!-- <app-breadcrumb></app-breadcrumb> --> 
         <router-outlet></router-outlet>
       </div>
     </ng-container>
