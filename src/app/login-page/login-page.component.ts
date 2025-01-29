@@ -12,7 +12,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class LoginPageComponent implements OnInit {
   public loginForm: FormGroup;
-  public loading = false;  // Spinner loading state
+  public loading = false; 
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,7 +37,7 @@ export class LoginPageComponent implements OnInit {
     };
   
     this.http
-      .post<any>('http://localhost:8000/api/login', credentials)
+      .post<any>('/api/login', credentials)
       .subscribe(
         (response) => {
           const jwtToken = response.token; 

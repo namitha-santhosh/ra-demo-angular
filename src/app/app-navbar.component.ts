@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AppNavbarComponent {
   pageTitle = 'QuantumRelease';
   isAuthenticated = false;
-  sidebarCollapsed = false;
+  sidebarCollapsed = true;
 
   constructor(public authService: AuthService, private router: Router) {}
 
