@@ -11,6 +11,7 @@ import { MaterialModule } from '../material.module';
 import { ArtifactListComponent } from './artifact-list/artifact-list.component';
 import { DeploymentListComponent } from './deployment-list/deployment-list.component';
 import { CreateDeploymentModalComponent } from './create-deployment-modal/create-deployment-modal.component';
+import { ReleaseGoNoGoComponent } from './release-go-no-go/release-go-no-go.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { CreateDeploymentModalComponent } from './create-deployment-modal/create
     CreateEditReleaseComponent,
     ArtifactListComponent,
     DeploymentListComponent,
-    CreateDeploymentModalComponent
+    CreateDeploymentModalComponent,
+    ReleaseGoNoGoComponent
   ]
 })
 export class ReleaseModule { }

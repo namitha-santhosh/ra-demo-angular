@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -6,11 +7,13 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private isAuthenticated = false;
   authState = { isAuthenticated: false };
+  private jwtHelper = new JwtHelperService();
 
   private token: string | null = null;
   private isAdminUser = false;
   private isAdmin = false;
   private isRA = false;
+  private isQA = false;
 
   setToken(token: string): void {
     this.token = token;
@@ -19,6 +22,22 @@ export class AuthService {
   getToken(): string | null {
     return this.token;
   }
+
+  getUser(): string | null {
+    if (this.token) {
+      const decodedToken = this.jwtHelper.decodeToken(this.token);
+      return decodedToken?.username || null;
+    }
+    return null;
+  }
+
+  getUserRoles(): string[] {
+    if (this.token) {
+      const decodedToken = this.jwtHelper.decodeToken(this.token);
+      return decodedToken?.roles || [];
+    }
+    return [];
+  }  
 
   login() {
     this.authState.isAuthenticated = true;
@@ -42,13 +61,21 @@ export class AuthService {
     this.isRA = isRA;
   }
 
-  hasRole(role: string): boolean {
-    if (role === 'ROLE_ADMIN') {
-      return this.isAdmin;
-    }
-    if (role === 'ROLE_RA') {
-      return this.isRA;
-    }
-    return false;
+  setQAStatus(isQA: boolean) {
+    this.isQA = isQA;
   }
+
+  hasRole(role: string): boolean {
+    if (this.isAdmin) {
+      return true;
+    }
+    switch (role) {
+      case 'ROLE_RA':
+        return this.isRA;
+      case 'ROLE_QA':
+        return this.isQA;
+      default:
+        return false;
+    }
+  }  
 }

@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ReleaseService } from '../release.service';
 import { Observable } from 'rxjs';
 import { DeploymentService } from '../deployment.service';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'pm-create-deployment-modal',
@@ -17,8 +18,12 @@ export class CreateDeploymentModalComponent implements OnInit {
   @Input() releaseName!: string;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
+  loading: boolean = false;
 
-  constructor(private releaseService: ReleaseService, private deploymentService: DeploymentService) { }
+  constructor(private releaseService: ReleaseService, 
+    private deploymentService: DeploymentService,
+    public authService: AuthService
+  ) { }
 
   ngOnInit() {
     if (this.releaseName) {
@@ -38,6 +43,7 @@ export class CreateDeploymentModalComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     const selectedArtifacts = this.artifacts
       .filter(artifact => artifact.selected)
       .map(artifact => ({
@@ -60,9 +66,11 @@ export class CreateDeploymentModalComponent implements OnInit {
       next: () => {
         this.save.emit();
         this.closeModal();
+        this.loading = false;
       },
       error: (error) => {
         console.error("Error creating deployment:", error);
+        this.loading = false;
       }
     });
   }

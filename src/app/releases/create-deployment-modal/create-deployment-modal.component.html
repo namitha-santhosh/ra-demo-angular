@@ -10,8 +10,9 @@
     <mat-form-field appearance="fill">
       <mat-label>Environment</mat-label>
       <mat-select [(ngModel)]="environmentName" name="environment" required>
-        <mat-option value="p10-demo">P10-Demo</mat-option>
-        <mat-option value="p10-test">P10-Test</mat-option>
+        <mat-option *ngIf="authService.hasRole('ROLE_RA') || authService.hasRole('ROLE_QA')" value="p10-qa">P10-QA</mat-option>
+        <mat-option *ngIf="authService.hasRole('ROLE_RA')" value="p10-stg">P10-STG</mat-option>
+        <mat-option *ngIf="authService.hasRole('ROLE_RA')" value="p10-prod">P10-Prod</mat-option>
       </mat-select>
     </mat-form-field>    
 
@@ -58,11 +59,13 @@
     </div>
 
     <div *ngIf="artifacts.length === 0">
-      <p>No artifacts available.</p>
+      <p>No artifacts available</p>
     </div>
 
     <div class="form-actions">
-      <button mat-raised-button type="submit" color="primary" [disabled]="!releaseForm.valid">Deploy</button>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!releaseForm.valid || loading">Deploy
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+      </button>
     </div>
   </form>
 </mat-dialog-content>

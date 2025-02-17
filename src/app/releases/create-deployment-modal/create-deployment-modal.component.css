@@ -51,5 +51,10 @@
     gap: 10px;
     margin-top: 20px;
   }
+
+  .spinner-border {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
   
   

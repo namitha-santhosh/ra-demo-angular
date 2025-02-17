@@ -1,7 +1,7 @@
 <div class="deployment-container mat-elevation-z8">
   <div class="header-actions">
     <h2>Deployments for {{ releaseName }}</h2>
-    <button mat-mini-fab color="primary" (click)="openModal()" matTooltip="Create new deployment">
+    <button *ngIf="authService.hasRole('ROLE_RA') || authService.hasRole('ROLE_QA')" mat-mini-fab color="primary" (click)="openModal()" matTooltip="Create new deployment">
       <mat-icon>add</mat-icon>
     </button>
   </div>
@@ -83,3 +83,72 @@
     </pm-create-deployment-modal>
   </div>
 </div>
+
+<div *ngIf="isDetailsModalOpen" class="modal-overlay">
+  <div class="modal-content">
+    <!-- Header with Close Icon and Title -->
+    <div class="modal-header">
+      <h2 class="modal-title">Deployment Details</h2>
+      <button class="close-icon" (click)="closeDetailsModal()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="details-section">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <tbody>
+            <tr>
+              <td><strong>Job Name:</strong></td>
+              <td>{{ selectedDeployment?.jobName }}</td>
+            </tr>
+            <tr>
+              <td><strong>Environment:</strong></td>
+              <td>{{ selectedDeployment?.parameters?.deployEnv }}</td>
+            </tr>
+            <tr>
+              <td><strong>Build Number:</strong></td>
+              <td>{{ selectedDeployment?.buildNumber }}</td>
+            </tr>
+            <tr>
+              <td><strong>Status:</strong></td>
+              <td>{{ selectedDeployment?.status }}</td>
+            </tr>
+            <tr>
+              <td><strong>Triggered By:</strong></td>
+              <td>{{ selectedDeployment?.triggeredBy }}</td>
+            </tr>
+            <tr>
+              <td><strong>Created At:</strong></td>
+              <td>{{ formatDate(selectedDeployment?.createdAt || '') }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Artifacts Section -->
+    <div class="details-section">
+      <h3 class="text-primary mb-3">Artifacts</h3>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>App Name</th>
+              <th>App Version</th>
+              <th>Release</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ selectedDeployment?.parameters?.appName }}</td>
+              <td>{{ selectedDeployment?.parameters?.appVersion }}</td>
+              <td>{{ selectedDeployment?.parameters?.releaseName }}</td>
+            </tr>
+          </tbody>
+        </table>        
+      </div>
+    </div>
+  </div>
+</div>
+

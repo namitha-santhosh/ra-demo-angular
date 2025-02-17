@@ -36,13 +36,13 @@ import { ArtifactsComponent } from './artifact/artifacts/artifacts.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent, data: { breadcrumb: 'Home' } },
-      { path: 'login', component:LoginPageComponent},
-      { path: 'signUp', component:SignupPageComponent},
-      { path: 'admin', canActivate:[AuthGuard], component: AdminComponent},
-      { path: 'artifacts', component: ArtifactsComponent, canActivate:[AuthGuard]},
+      { path: 'login', component: LoginPageComponent },
+      { path: 'signUp', component: SignupPageComponent },
+      { path: 'admin', canActivate: [AuthGuard], component: AdminComponent },
+      { path: 'artifacts', canActivate: [AuthGuard], component: ArtifactsComponent },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: '**', redirectTo: 'login', pathMatch: 'full'}
-    ]),
+      { path: '**', redirectTo: 'login', pathMatch: 'full' }
+    ], { useHash: true }),
     ReleaseModule,
     FormsModule,
     SharedModule,

@@ -31,7 +31,6 @@ export class ReleaseService {
       
     return this.http.get<Release[]>(urlWithParams, { headers })
       .pipe(
-        tap(data => console.log(JSON.stringify(data))),
         catchError(this.handleError)
       );
   }
@@ -45,7 +44,6 @@ export class ReleaseService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<Release>(url, { headers })
       .pipe(
-        tap(data => console.log('getRelease: ' + JSON.stringify(data))),
         catchError(this.handleError)
       );
   }
@@ -55,9 +53,6 @@ export class ReleaseService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
   
     return this.http.post<Release>(this.releaseUrl, release, { headers }).pipe(
-      tap((data: any) => {
-        console.log('createRelease Response:', data);
-      }),
       catchError(this.handleError)
     );
   }
@@ -69,7 +64,6 @@ export class ReleaseService {
     const url = `${this.releaseUrl}/${name}`;
     return this.http.delete<Release>(url, { headers })
       .pipe(
-        tap(data => console.log('deleteRelease: ' + name)),
         catchError(this.handleError)
       );
   }
@@ -80,7 +74,6 @@ export class ReleaseService {
     const url = `${this.releaseUrl}/${release.name}`;
     return this.http.put<Release>(url, release, { headers })
       .pipe(
-        tap(() => console.log('Inside updateProduct: ' + release.name)),
         map(() => release),
         catchError(this.handleError)
       );
@@ -93,7 +86,6 @@ export class ReleaseService {
     
     return this.http.get<any[]>(url, { headers })
       .pipe(
-        tap(data => console.log('getReleaseArtifacts: ' + JSON.stringify(data))),
         catchError(this.handleError)
       );
   }
@@ -107,7 +99,6 @@ export class ReleaseService {
       `${this.releasesUrl}/${releaseName}/deployments`, { headers }
     )
     .pipe(
-      tap(data => console.log('getReleaseDeployments: ' + JSON.stringify(data))),
       catchError(this.handleError)
     );
   }
@@ -119,7 +110,6 @@ export class ReleaseService {
     
     return this.http.delete(url, { headers })
       .pipe(
-        tap(() => console.log('deleteArtifactFromRelease: ' + artifactName)),
         catchError(this.handleError)
       );
   }
@@ -131,7 +121,29 @@ export class ReleaseService {
     
     return this.http.patch<any>(url, updateData, { headers })
       .pipe(
-        tap((data) => console.log('patchArtifact: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  } 
+  
+  getSignoffs(releaseName: string): Observable<any[]> {
+    const token = this.authService.getToken();
+    const url = `${this.releasesUrl}/${releaseName}/signoffs`;
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+    return this.http.get<any[]>(url, { headers })
+      .pipe(
+        tap(data => console.log('getSignoffs:', JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+  
+  createOrUpdateSignoff(releaseName: string, signoffData: any): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
+  
+    return this.http.post<any>(`${this.releasesUrl}/${releaseName}/signoffs`, signoffData, { headers })
+      .pipe(
+        tap((data) => console.log('createOrUpdateSignoff:', data)),
         catchError(this.handleError)
       );
   }  

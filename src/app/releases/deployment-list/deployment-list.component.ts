@@ -1,19 +1,23 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ReleaseService } from '../release.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Release } from '../release';
 import { Deployment } from '../deployment';
+import { interval, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-deployment-list',
   templateUrl: './deployment-list.component.html',
   styleUrls: ['./deployment-list.component.css']
 })
-export class DeploymentListComponent implements OnInit {
+export class DeploymentListComponent implements OnInit, OnDestroy {
   @Input() releaseName!: string;
   isModalOpen: boolean = false;
   deployments: Deployment[] = [];
   errorMessage: string | undefined;
+  isDetailsModalOpen: boolean = false;
+  selectedDeployment: Deployment | null = null;
   displayedColumns: string[] = [
     'buildNumber',
     'jobName',
@@ -24,16 +28,23 @@ export class DeploymentListComponent implements OnInit {
     'actions'
   ];
   isLoading: boolean = false;
+  private refreshSubscription!: Subscription;
 
   constructor(
-    private releaseService: ReleaseService, 
+    private releaseService: ReleaseService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
     if (this.releaseName) {
       this.fetchDeployments(this.releaseName);
+
+      // Set up periodic polling every 20 seconds
+      this.refreshSubscription = interval(20000).subscribe(() => {
+        this.fetchDeployments(this.releaseName);
+      });
     }
   }
 
@@ -52,6 +63,13 @@ export class DeploymentListComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    // Clean up the subscription when the component is destroyed
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
+    }
+  }
+
   getEnvironment(deployment: Deployment): string {
     return deployment.parameters?.deployEnv || 'N/A';
   }
@@ -66,10 +84,12 @@ export class DeploymentListComponent implements OnInit {
         return 'green';
       case 'FAILED':
         return 'red';
-      case 'PENDING':
+      case 'IN-PROGRESS':
         return 'orange';
-      case 'STARTED':
+      case 'ABORTED':
         return 'blue';
+      case 'UNSTABLE':
+        return 'yellow';
       default:
         return 'grey';
     }
@@ -78,17 +98,23 @@ export class DeploymentListComponent implements OnInit {
   openModal(): void {
     this.isModalOpen = true;
   }
-  
+
   closeModal(): void {
     this.isModalOpen = false;
   }
-  
+
   saveDeployment(release: Release): void {
     this.closeModal();
     this.fetchDeployments(this.releaseName!);
   }
 
   viewDeploymentDetails(deployment: Deployment): void {
-    console.log('View deployment:', deployment);
+    this.selectedDeployment = deployment;
+    this.isDetailsModalOpen = true;
+  }
+
+  closeDetailsModal(): void {
+    this.isDetailsModalOpen = false;
+    this.selectedDeployment = null;
   }
 }

@@ -50,9 +50,11 @@ export class LoginPageComponent implements OnInit {
   
           const isAdmin = tokenPayload.roles.includes('ROLE_ADMIN');
           const isRA = tokenPayload.roles.includes('ROLE_RA');
+          const isQA = tokenPayload.roles.includes('ROLE_QA');
           
           this.authService.setAdminStatus(isAdmin);
           this.authService.setRAStatus(isRA);
+          this.authService.setQAStatus(isQA);
           
           this.loginForm.reset();
           this.router.navigate(['welcome']);

@@ -21,7 +21,6 @@ export class SignupPageComponent {
   ngOnInit(): void {
     this.signUpForm = this.formBuilder.group({
       fullname: ["", Validators.required],
-      contact: ["", Validators.minLength(10)],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(5)]]
     });

@@ -1,0 +1,31 @@
+<div class="checklist-container">
+  <table class="checklist-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Status (Go/No-Go)</th>
+        <th>Signed Off By</th>
+        <th>Signed Off At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let type of signoffTypes">
+        <td>{{ type }}</td>
+        <td>
+          <label>
+            <input type="radio" [name]="type" [checked]="getSignoffStatus(type) === 'yes'" 
+                   (change)="handleSignoff(type, true)"
+                   [disabled]="isSignoffDisabled(type)"> Yes
+          </label>
+          <label>
+            <input type="radio" [name]="type" [checked]="getSignoffStatus(type) === 'no'" 
+                   (change)="handleSignoff(type, false)"
+                   [disabled]="isSignoffDisabled(type)"> No
+          </label>
+        </td>
+        <td>{{ getSignoffField(type, 'signedOffBy') || 'N/A' }}</td>
+        <td>{{ getSignoffField(type, 'signedOffAt') ? (getSignoffField(type, 'signedOffAt') | date: 'short') : 'N/A' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

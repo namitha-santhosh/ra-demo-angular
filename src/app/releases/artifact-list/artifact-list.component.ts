@@ -40,11 +40,9 @@ export class ArtifactListComponent implements OnInit {
     if (this.releaseName) {
       this.releaseService.deleteArtifactFromRelease(this.releaseName, artifact.artifactName).subscribe(
         () => {
-          console.log(`Deleted artifact: ${artifact.artifactName}`);
           this.fetchArtifacts(this.releaseName);
         },
         (error) => {
-          console.error('Error deleting artifact:', error);
           this.errorMessage = 'Error deleting artifact';
         }
       );
@@ -58,7 +56,6 @@ export class ArtifactListComponent implements OnInit {
       };
       this.releaseService.patchArtifact(this.releaseName, artifact.artifactName, updateData).subscribe(
         () => {
-          console.log(`Added artifact with status "accepted": ${artifact.artifactName}`);
           this.fetchArtifacts(this.releaseName);  
         },
         (error) => {

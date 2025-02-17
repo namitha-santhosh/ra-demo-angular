@@ -29,7 +29,6 @@ export class ArtifactService {
         
       return this.http.get<Artifact[]>(urlWithParams, { headers })
         .pipe(
-          tap(data => console.log(JSON.stringify(data))),
           catchError(this.handleError)
         );
     }

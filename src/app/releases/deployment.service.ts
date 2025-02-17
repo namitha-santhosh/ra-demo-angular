@@ -39,7 +39,6 @@ export class DeploymentService {
       releaseName: releaseName
     }, { headers })
     .pipe(
-      tap(data => console.log('createDeployment: ' + JSON.stringify(data))),
       catchError(this.handleError)
     );
   }

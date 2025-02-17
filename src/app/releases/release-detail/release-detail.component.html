@@ -34,6 +34,11 @@
           <app-deployment-list [releaseName]="release.name"></app-deployment-list>
         </div>
       </mat-tab>
+      <mat-tab label="Release Go/No-Go">
+        <div class="tab-content">
+          <app-release-go-no-go [releaseName]="release.name"></app-release-go-no-go>
+        </div>
+      </mat-tab>
     </mat-tab-group>
   </div>
 
