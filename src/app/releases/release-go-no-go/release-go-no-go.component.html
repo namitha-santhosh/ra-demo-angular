@@ -20,7 +20,7 @@
           <label>
             <input type="radio" [name]="type" [checked]="getSignoffStatus(type) === 'no'" 
                    (change)="handleSignoff(type, false)"
-                   [disabled]="isSignoffDisabled(type)"> No
+                   [disabled]="isSignoffDisabled(type)"> N/A
           </label>
         </td>
         <td>{{ getSignoffField(type, 'signedOffBy') || 'N/A' }}</td>
